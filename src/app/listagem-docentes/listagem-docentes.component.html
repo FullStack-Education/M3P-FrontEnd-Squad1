@@ -1,0 +1,39 @@
+<div class="container mt-5">
+    <h2>Listagem de Docentes</h2>
+  
+    <div class="input-group mb-4">
+      <input
+        [(ngModel)]="searchQuery"
+        type="text"
+        class="form-control"
+        placeholder="Buscar por nome ou identificador..."
+      />
+      <button (click)="onSearch()" class="btn btn-primary">Pesquisar</button>
+    </div>
+  
+    <div *ngIf="filteredDocentes.length > 0; else noDocentes">
+      <div
+        class="card mb-3"
+        *ngFor="let docente of filteredDocentes"
+      >
+        <div class="card-body">
+          <h5 class="card-title">{{ docente.nome }}</h5>
+          <p class="card-text">
+            <strong>ID:</strong> {{ docente.id }}<br />
+            <strong>Contato:</strong> {{ docente.email }}
+          </p>
+          <button
+            class="btn btn-secondary"
+            (click)="onViewDocente()"
+          >
+            Ver Mais
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #noDocentes>
+      <p>Nenhum docente encontrado.</p>
+    </ng-template>
+  </div>
+  

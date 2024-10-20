@@ -1,0 +1,30 @@
+<div class="sidebar" [class.collapsed]="isCollapsed || isMobile" [class.hidden]="isMobile && !isMobileSidebarOpen">
+  <button class="toggle-button" (click)="toggleCollapse()">☰</button>
+
+  <ul class="nav flex-column" [class.hidden]="isCollapsed || (isMobile && !isMobileSidebarOpen)">
+    <li class="nav-item">
+      <button class="nav-link" routerLink="/home">Início</button>
+    </li>
+    <li *ngIf="userRole === 'ADMINISTRADOR'" class="nav-item">
+      <a class="nav-link" routerLink="/cadastro-docente">Cadastro Docente</a>
+    </li>
+    <li *ngIf="userRole === 'ADMINISTRADOR'" class="nav-item">
+      <a class="nav-link" routerLink="/cadastro-aluno">Cadastro de Aluno</a>
+    </li>
+    <li *ngIf="userRole === 'ADMINISTRADOR' || userRole === 'DOCENTE'" class="nav-item">
+      <a class="nav-link" routerLink="/cadastro-turma">Cadastro de Turma</a>
+    </li>
+    <li *ngIf="userRole === 'ADMINISTRADOR' || userRole === 'DOCENTE'" class="nav-item">
+      <a class="nav-link" routerLink="/cadastro-avaliacao">Cadastro de Avaliação</a>
+    </li>
+    <li *ngIf="userRole === 'ADMINISTRADOR'" class="nav-item">
+      <a class="nav-link" routerLink="/listagem-docentes">Listagem de Docentes</a>
+    </li>
+    <li *ngIf="userRole === 'ALUNO'" class="nav-item">
+      <a class="nav-link" routerLink="/listagem-notas">Notas</a>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" (click)="logout()">Sair</button>
+    </li>
+  </ul>
+</div>

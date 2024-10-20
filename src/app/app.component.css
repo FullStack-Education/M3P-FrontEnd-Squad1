@@ -1,0 +1,44 @@
+/* Common styles for all pages */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .app-toolbar {
+    height: 60px;
+  }
+  
+  .app-sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    height: calc(100vh - 60px);
+    width: 250px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    z-index: 1000;
+  }
+  
+  .content {
+    margin-left: 250px;
+    margin-top: 60px;
+    padding: 20px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+  
+  .login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0;
+  }
+  
+  .login-page .content {
+    margin: 0;
+    padding: 0;
+    height: auto;
+  }
+  

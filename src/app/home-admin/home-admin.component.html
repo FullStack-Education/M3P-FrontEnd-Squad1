@@ -1,0 +1,56 @@
+<div class="container mt-4">
+
+  <h1> Estatísticas </h1>
+  <div id="estatisticas" class="row mb-4">
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Alunos Cadastrados</h5>
+          <p class="card-text">{{ alunosCadastrados }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Docentes Cadastrados</h5>
+          <p class="card-text">{{ docentesCadastrados }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Turmas Cadastradas</h5>
+          <p class="card-text">{{ turmasCadastradas }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1> Pesquisar aluno </h1>
+  <div id="pesquisar-aluno" class="row mb-4">
+    <div class="col">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Pesquisar aluno por nome, telefone ou email">
+        <button class="btn btn-primary" (click)="pesquisarAluno('')">Pesquisar</button>
+      </div>
+    </div>
+  </div>
+
+  <h1> Alunos </h1>
+  <div id="alunos" class="row">
+    <div class="col-md-4 mb-4" *ngFor="let aluno of alunos">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fas fa-user"></i> {{ aluno.nome }}
+          </h5>
+          <p class="card-text">Idade: {{ aluno.idade }}</p>
+          <p class="card-text">Email: {{ aluno.email }}</p>
+          <button class="btn btn-secondary" (click)="verMaisAluno(aluno)">Ver mais</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

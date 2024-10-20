@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <h1>Pesquisar aluno</h1>
+    <div class="row mb-4">
+      <div class="col">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Pesquisar aluno por nome, telefone ou email">
+          <button class="btn btn-primary" (click)="pesquisarAluno('')">Pesquisar</button>
+        </div>
+      </div>
+    </div>
+  
+    <h1>Alunos</h1>
+    <div class="row">
+      <div class="col-md-4 mb-4" *ngFor="let aluno of alunos">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="fas fa-user"></i> {{ aluno.nome }}
+            </h5>
+            <p class="card-text">Idade: {{ aluno.idade }}</p>
+            <p class="card-text">Email: {{ aluno.email }}</p>
+            <button class="btn btn-secondary" (click)="lancarNota(aluno)">Lançar Nota</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
