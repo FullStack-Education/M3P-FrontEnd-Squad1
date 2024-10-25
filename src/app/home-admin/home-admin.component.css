@@ -104,3 +104,11 @@ h1 {
 #alunos .fas {
   margin-right: 0.5rem;
 }
+
+.user-icon {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: 2px solid white;
+  margin-bottom: 1rem;
+}
