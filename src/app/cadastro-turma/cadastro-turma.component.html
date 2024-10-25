@@ -1,69 +1,68 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-10 col-lg-8">
-        <form [formGroup]="turmaForm" (ngSubmit)="onSubmit()" class="p-4 border rounded bg-light shadow">
-          <h1>Cadastro de Turma</h1>
-          
-          <div class="mb-3">
-            <label for="nome" class="form-label">Nome da Turma:</label>
-            <input id="nome" formControlName="nome" type="text" class="form-control" />
-            <div *ngIf="turmaForm.get('nome')?.invalid && turmaForm.get('nome')?.touched" class="text-danger">
-              Nome da Turma é obrigatório e deve ter entre 8 e 64 caracteres.
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <form [formGroup]="turmaForm" (ngSubmit)="onSubmit()" class="p-4 border rounded bg-light shadow">
+        <h1>Cadastro de Turma</h1>
+        
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome da Turma:</label>
+          <input id="nome" formControlName="nome" type="text" class="form-control" />
+          <div *ngIf="turmaForm.get('nome')?.invalid && turmaForm.get('nome')?.touched" class="text-danger">
+            Nome da Turma é obrigatório e deve ter entre 8 e 64 caracteres.
           </div>
-  
-          <div class="mb-3">
-            <label for="dataInicio" class="form-label">Data de Início:</label>
-            <input id="dataInicio" formControlName="dataInicio" type="date" class="form-control" />
-            <div *ngIf="turmaForm.get('dataInicio')?.invalid && turmaForm.get('dataInicio')?.touched" class="text-danger">
-              Data de Início é obrigatória e deve ser válida.
-            </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dataInicio" class="form-label">Data de Início:</label>
+          <input id="dataInicio" formControlName="dataInicio" type="date" class="form-control" />
+          <div *ngIf="turmaForm.get('dataInicio')?.invalid && turmaForm.get('dataInicio')?.touched" class="text-danger">
+            Data de Início é obrigatória e deve ser válida.
           </div>
-  
-          <div class="mb-3">
-            <label for="dataTermino" class="form-label">Data de Término:</label>
-            <input id="dataTermino" formControlName="dataTermino" type="date" class="form-control" />
-            <div *ngIf="turmaForm.get('dataTermino')?.invalid && turmaForm.get('dataTermino')?.touched" class="text-danger">
-              Data de Término é obrigatória e deve ser válida.
-            </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dataTermino" class="form-label">Data de Término:</label>
+          <input id="dataTermino" formControlName="dataTermino" type="date" class="form-control" />
+          <div *ngIf="turmaForm.get('dataTermino')?.invalid && turmaForm.get('dataTermino')?.touched" class="text-danger">
+            Data de Término é obrigatória e deve ser válida.
           </div>
-  
-          <div class="mb-3">
-            <label for="horario" class="form-label">Horário da Turma:</label>
-            <input id="horario" formControlName="horario" type="time" class="form-control" />
-            <div *ngIf="turmaForm.get('horario')?.invalid && turmaForm.get('horario')?.touched" class="text-danger">
-              Horário da Turma é obrigatório.
-            </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="horario" class="form-label">Horário da Turma:</label>
+          <input id="horario" formControlName="horario" type="time" class="form-control" />
+          <div *ngIf="turmaForm.get('horario')?.invalid && turmaForm.get('horario')?.touched" class="text-danger">
+            Horário da Turma é obrigatório.
           </div>
-  
-          <div class="mb-3">
-            <label for="docente" class="form-label">Docente:</label>
-            <select id="docente" formControlName="docente" class="form-select">
-              <option *ngFor="let docente of docentes" [value]="docente">{{ docente }}</option>
-            </select>
-            <div *ngIf="turmaForm.get('docente')?.invalid && turmaForm.get('docente')?.touched" class="text-danger">
-              Docente é obrigatório.
-            </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="docente" class="form-label">Docente:</label>
+          <select id="docente" formControlName="docente" class="form-select">
+            <option *ngFor="let docente of docentes" [value]="docente">{{ docente }}</option>
+          </select>
+          <div *ngIf="turmaForm.get('docente')?.invalid && turmaForm.get('docente')?.touched" class="text-danger">
+            Docente é obrigatório.
           </div>
-  
-          <div class="mb-3">
-            <label for="materia" class="form-label">Matéria:</label>
-            <select id="materia" formControlName="materia" class="form-select">
-              <option *ngFor="let materia of materias" [value]="materia">{{ materia }}</option>
-            </select>
-            <div *ngIf="turmaForm.get('materia')?.invalid && turmaForm.get('materia')?.touched" class="text-danger">
-              Matéria é obrigatória.
-            </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="materia" class="form-label">Matéria:</label>
+          <select id="materia" formControlName="materia" class="form-select">
+            <option *ngFor="let materia of materias" [value]="materia">{{ materia }}</option>
+          </select>
+          <div *ngIf="turmaForm.get('materia')?.invalid && turmaForm.get('materia')?.touched" class="text-danger">
+            Matéria é obrigatória.
           </div>
-  
-          <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary me-2" [disabled]="!turmaForm.valid">Salvar</button>
-            <button type="button" class="btn btn-secondary me-2" (click)="onEdit()">Editar</button>
-            <button type="button" class="btn btn-danger" (click)="onDelete()">Deletar</button>
-            <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
-          </div>
-        </form>
-      </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary me-2" [disabled]="!turmaForm.valid">Salvar</button>
+          <button type="button" class="btn btn-secondary me-2" (click)="onEdit()" [disabled]="!turmaForm.valid">Editar</button>
+          <button type="button" class="btn btn-danger" (click)="onDelete()" [disabled]="!turmaForm.valid">Deletar</button>
+          <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+        </div>
+      </form>
     </div>
   </div>
-  
+</div>
