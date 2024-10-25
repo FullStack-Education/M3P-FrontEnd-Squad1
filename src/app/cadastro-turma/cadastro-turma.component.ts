@@ -87,7 +87,7 @@ export class CadastroTurmaComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
   private generateUniqueId(): string {
