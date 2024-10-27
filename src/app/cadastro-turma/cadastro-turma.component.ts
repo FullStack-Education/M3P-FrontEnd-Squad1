@@ -12,7 +12,7 @@ import { DocenteService } from '../services/docente.service';
   imports: [CommonModule, ReactiveFormsModule],
   providers: [TurmaService, DocenteService],
   templateUrl: './cadastro-turma.component.html',
-  styleUrls: ['./cadastro-turma.component.scss']
+  styleUrls: ['./cadastro-turma.component.css']
 })
 export class CadastroTurmaComponent implements OnInit {
   turmaForm!: FormGroup;
