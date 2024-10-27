@@ -17,7 +17,7 @@ export const routes: Routes = [
   { path: 'cadastro-aluno', component: CadastroAlunoComponent, data: { title: 'Cadastro de Aluno'} },
   { path: 'cadastro-turma', component: CadastroTurmaComponent, data: { title: 'Cadastro de Turma'} },
   { path: 'cadastro-avaliacao', component: CadastroAvaliacaoComponent, data: { title: 'Cadastro de Avaliação'} },
-  { path: 'listagem-docentes', component: ListagemDocentesComponent, data: { title: 'Listagem de Docentes'}, canActivate: [docentesGuardGuard] },
+  { path: 'listagem-docentes', component: ListagemDocentesComponent, canActivate: [docentesGuardGuard], data: { title: 'Listagem de Docentes'} },
   { path: 'listagem-notas', component: ListagemNotasComponent, data: { title: 'Listagem de Notas'} }
 ];
 

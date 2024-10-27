@@ -25,4 +25,35 @@ export class DocenteService {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updatedDocentes));
   }
 
+  getMock(): any[] {
+    return [
+      {
+        id: '2',
+        nome: 'Otávio Queiroz',
+        genero: '',
+        nascimento: '',
+        cpf: '',
+        rg: '',
+        idade: '',
+        expeditor: '',
+        naturalidade: '',
+        estadoCivil: '',
+        telefone: '',
+        email: 'docente@scholargate.com',
+        senha: 'docente123',
+        perfil: 'Docente',
+        endereco: {
+          cep: '',
+          cidade: '',
+          logradouro: '',
+          numero: '',
+          complemento: '',
+          bairro: '',
+          referencia: '',
+        },
+        materias: {}
+      }
+    ]
+  }
+
 }

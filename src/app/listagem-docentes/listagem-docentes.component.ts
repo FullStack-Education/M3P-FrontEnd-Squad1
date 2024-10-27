@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DocenteService } from '../services/docente.service';
 
 @Component({
   selector: 'app-listagem-docentes',
@@ -11,36 +12,31 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./listagem-docentes.component.css'],
 })
 export class ListagemDocentesComponent implements OnInit {
-  docentes: any[] = [];
+
+  constructor(private router: Router) {}
+  docenteService = inject(DocenteService);
+
+  docentes = this.docenteService.getMock();
   searchQuery: string = '';
   filteredDocentes: any[] = [];
 
-  constructor(private router: Router) {}
-
   ngOnInit(): void {
-    this.loadDocentes();
+    this.filteredDocentes = [...this.docentes];
   }
 
-  loadDocentes() {
-    const storedDocentes = localStorage.getItem('docentes');
-    if (storedDocentes) {
-      this.docentes = JSON.parse(storedDocentes);
-      this.filteredDocentes = [...this.docentes];
-    }
-  }
-
-  onSearch() {
-    if (this.searchQuery.trim() !== '') {
-      this.filteredDocentes = this.docentes.filter((docente) =>
+  onSearch(searchQuery: string) {
+    if (searchQuery) {
+      this.filteredDocentes = this.docentes.filter(docente =>
         docente.nome.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        docente.id.toLowerCase().includes(this.searchQuery.toLowerCase())
+        docente.email.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        docente.id.toString() == this.searchQuery
       );
     } else {
       this.filteredDocentes = [...this.docentes];
     }
   }
 
-  onViewDocente() {
-    this.router.navigate(['/cadastro-docente']);
+  onViewDocente(event: Event) {
+    this.router.navigate(['/cadastro-docente'], { state: { event } });
   }
 }
