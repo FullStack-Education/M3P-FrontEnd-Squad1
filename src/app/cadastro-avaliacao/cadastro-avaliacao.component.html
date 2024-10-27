@@ -97,6 +97,8 @@
 
         <div class="d-flex justify-content-between">
           <button type="submit" class="btn btn-primary">Salvar</button>
+          <button type="button" class="btn btn-secondary me-2" (click)="onEdit()" [disabled]="!avaliacaoForm.valid">Editar</button>
+          <button type="button" class="btn btn-danger" (click)="onDelete()" [disabled]="!avaliacaoForm.valid">Deletar</button>
           <button type="button" (click)="onCancel()" class="btn btn-secondary">Cancelar</button>
         </div>
       </form>
