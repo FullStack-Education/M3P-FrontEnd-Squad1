@@ -1,17 +1,27 @@
 <div class="container mt-4">
   <h1>Avaliações</h1>
-  <div class="row mb-4">
-    <div class="col-md-4 mb-4" *ngFor="let avaliacao of avaliacoes">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ avaliacao.nome }}</h5>
-          <p class="card-text">Matéria: {{ avaliacao.materia }}</p>
-          <p class="card-text">Data: {{ avaliacao.data }}</p>
-          <button class="btn btn-primary" (click)="verMaisAvaliacao(avaliacao)">Ver Mais</button>
+  <div *ngIf="avaliacoes.length > 0; else noAvaliacoes">
+    <div class="row mb-4">
+      <div class="col-md-4 mb-4" *ngFor="let avaliacao of avaliacoes">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ avaliacao.nome }}</h5>
+            <p class="card-text">Matéria: {{ avaliacao.materia }}</p>
+            <p class="card-text">Data: {{ avaliacao.data }}</p>
+            <button class="btn btn-primary" (click)="verMaisAvaliacao(avaliacao)">
+              Ver Mais
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <ng-template #noAvaliacoes>
+    <div class="alert alert-info" role="alert">
+      Você não tem nenhuma avaliação.
+    </div>
+  </ng-template>
 
   <h1>Matérias</h1>
   <div class="row mb-4">
