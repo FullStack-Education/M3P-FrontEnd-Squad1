@@ -9,6 +9,7 @@ import { ListagemDocentesComponent } from './listagem-docentes/listagem-docentes
 import { ListagemNotasComponent } from './listagem-notas/listagem-notas.component';
 import { NgModule } from '@angular/core';
 import { docentesGuardGuard } from './guards/docentes-guard.guard';
+import { notasGuard } from './guards/notas.guard';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -18,7 +19,7 @@ export const routes: Routes = [
   { path: 'cadastro-turma', component: CadastroTurmaComponent, data: { title: 'Cadastro de Turma'} },
   { path: 'cadastro-avaliacao', component: CadastroAvaliacaoComponent, data: { title: 'Cadastro de Avaliação'} },
   { path: 'listagem-docentes', component: ListagemDocentesComponent, canActivate: [docentesGuardGuard], data: { title: 'Listagem de Docentes'} },
-  { path: 'listagem-notas', component: ListagemNotasComponent, data: { title: 'Listagem de Notas'} }
+  { path: 'listagem-notas', component: ListagemNotasComponent, canActivate: [notasGuard], data: { title: 'Listagem de Notas'} }
 ];
 
 @NgModule({

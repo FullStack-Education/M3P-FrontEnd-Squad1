@@ -12,7 +12,7 @@ export class ListagemNotasComponent {
   avaliacoes: any[] = [];
 
   ngOnInit() {
-    this.buscarAvaliacoes();
+    
   }
 
   buscarAvaliacoes() {
