@@ -1,14 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CadastroDocenteComponent } from './cadastro-docente.component';
 
 describe('CadastroDocenteComponent', () => {
   let component: CadastroDocenteComponent;
   let fixture: ComponentFixture<CadastroDocenteComponent>;
+  let httpMock: HttpTestingController;
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CadastroDocenteComponent]
+      imports: [CadastroDocenteComponent, HttpClientTestingModule]
     })
     .compileComponents();
     
