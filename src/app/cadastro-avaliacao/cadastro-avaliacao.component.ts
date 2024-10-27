@@ -11,7 +11,7 @@ import { DocenteService } from '../services/docente.service';
   imports: [CommonModule, ReactiveFormsModule],
   providers: [DocenteService],
   templateUrl: './cadastro-avaliacao.component.html',
-  styleUrls: ['./cadastro-avaliacao.component.scss']
+  styleUrls: ['./cadastro-avaliacao.component.css']
 })
 export class CadastroAvaliacaoComponent implements OnInit {
   avaliacaoForm!: FormGroup;

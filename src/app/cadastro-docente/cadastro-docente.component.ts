@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [CommonModule, ReactiveFormsModule],
   providers: [ViaCepService, DocenteService],
   templateUrl: './cadastro-docente.component.html',
-  styleUrls: ['./cadastro-docente.component.scss']
+  styleUrls: ['./cadastro-docente.component.css']
 })
 export class CadastroDocenteComponent implements OnInit {
   docenteForm!: FormGroup;
