@@ -36,7 +36,7 @@ export class ListagemDocentesComponent implements OnInit {
     }
   }
 
-  onViewDocente(event: Event) {
-    this.router.navigate(['/cadastro-docente'], { state: { event } });
+  onViewDocente(docente: any) {
+    this.router.navigate(['/cadastro-docente'], { state: { docente } });
   }
 }

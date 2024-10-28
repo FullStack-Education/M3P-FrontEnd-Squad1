@@ -15,9 +15,11 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./cadastro-aluno.component.css']
 })
 export class CadastroAlunoComponent implements OnInit {
+
   alunoForm!: FormGroup;
+
   generos = ['Masculino', 'Feminino', 'Outro'];
-  estadosCivis = ['Solteiro(a)', 'Casado(a)', 'Divorciado(a)', 'Viúvo(a)'];
+  estadosCivis = ['Solteiro(a)', 'Casado(a)', 'União Estável', 'Divorciado(a)', 'Viúvo(a)'];
   turmas = ['Turma A', 'Turma B', 'Turma C'];
   isEditing = false;
 
@@ -26,7 +28,62 @@ export class CadastroAlunoComponent implements OnInit {
     private viaCepService: ViaCepService,
     private router: Router,
     private alunoService: AlunoService
-  ) {}
+  ) {
+    let alunoRecebido = this.router.getCurrentNavigation()?.extras.state?.['event'];
+
+    if (alunoRecebido) {
+      this.isEditing = true;
+
+      this.aluno.nome = alunoRecebido.nome;
+      this.aluno.genero = alunoRecebido.genero;
+      this.aluno.nascimento = alunoRecebido.nascimento;
+      this.aluno.cpf = alunoRecebido.cpf;
+      this.aluno.rg = alunoRecebido.rg;
+      this.aluno.expeditor = alunoRecebido.expeditor;
+      this.aluno.naturalidade = alunoRecebido.naturalidade;
+      this.aluno.telefone = alunoRecebido.telefone;
+      this.aluno.email = alunoRecebido.email;
+      this.aluno.senha = alunoRecebido.senha;
+      this.aluno.endereco.cep = alunoRecebido.endereco.cep;
+      this.aluno.endereco.cidade = alunoRecebido.endereco.cidade;
+      this.aluno.endereco.logradouro = alunoRecebido.endereco.logradouro;
+      this.aluno.endereco.numero = alunoRecebido.endereco.numero;
+      this.aluno.endereco.complemento = alunoRecebido.endereco.complemento;
+      this.aluno.endereco.bairro = alunoRecebido.endereco.bairro;
+      this.aluno.endereco.referencia = alunoRecebido.endereco.referencia;
+      this.aluno.turma = alunoRecebido.turma;
+    }
+  }
+
+  aluno = {
+    id: '',
+    nome: '',
+    genero: '',
+    nascimento: '',
+    cpf: '',
+    rg: '',
+    idade: '',
+    expeditor: '',
+    naturalidade: '',
+    estadoCivil: '',
+    telefone: '',
+    email: '',
+    senha: '',
+    perfil: 'Aluno',
+    endereco: {
+      cep: '',
+      cidade: '',
+      logradouro: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      referencia: '',
+    },
+    avaliacoes: [],
+    notaCountId: '',
+    turma: {},
+    materias: {}
+}
 
   ngOnInit(): void {
     this.initForm();
@@ -34,7 +91,7 @@ export class CadastroAlunoComponent implements OnInit {
 
   initForm(): void {
     this.alunoForm = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
+      nome: [`${this.aluno.nome}`, [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
       genero: ['', Validators.required],
       dataNascimento: ['', Validators.required],
       cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
@@ -55,6 +112,8 @@ export class CadastroAlunoComponent implements OnInit {
       turmas: [[], Validators.required]
     });
   }
+
+
 
   buscarEndereco(): void {
     const cep = this.alunoForm.get('enderecoCep')?.value;

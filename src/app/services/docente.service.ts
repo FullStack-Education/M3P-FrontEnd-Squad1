@@ -30,6 +30,35 @@ export class DocenteService {
       {
         id: '2',
         nome: 'Otávio Queiroz',
+        genero: 'Masculino',
+        nascimento: '1984-09-10',
+        cpf: '000.000.000-00',
+        rg: '123456-RI',
+        idade: '21',
+        expeditor: 'SSP',
+        naturalidade: 'Florianópolis',
+        estadoCivil: 'Casado(a)',
+        telefone: '(48)99999-0000',
+        email: 'docente@scholargate.com',
+        senha: 'docente123',
+        perfil: 'Docente',
+        endereco: {
+          cep: '88040-030',
+          cidade: '',
+          logradouro: '',
+          numero: '',
+          complemento: '',
+          bairro: '',
+          referencia: '',
+        },
+        materias: [
+          'Matemática',
+          'Física'
+        ]
+      },
+      {
+        id: '10',
+        nome: 'Fulano de Tal',
         genero: '',
         nascimento: '',
         cpf: '',
@@ -50,8 +79,7 @@ export class DocenteService {
           complemento: '',
           bairro: '',
           referencia: '',
-        },
-        materias: {}
+        }
       }
     ]
   }

@@ -15,7 +15,7 @@ import { cadastroAlunoGuard } from './guards/cadastro-aluno.guard';
 import { cadastroDocenteGuard } from './guards/cadastro-docente.guard';
 
 export const routes: Routes = [
-  { path: '/', component: LoginComponent },
+  { path: '', component: LoginComponent },
   { path: 'home', component: HomeComponent, data: { title: 'Início'} },
   { path: 'cadastro-docente', component: CadastroDocenteComponent, canActivate: [cadastroDocenteGuard], data: { title: 'Cadastro de Docente'} },
   { path: 'cadastro-aluno', component: CadastroAlunoComponent, canActivate: [cadastroAlunoGuard], data: { title: 'Cadastro de Aluno'} },
