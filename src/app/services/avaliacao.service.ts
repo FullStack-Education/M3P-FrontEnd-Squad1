@@ -26,4 +26,30 @@ export class AvaliacaoService {
     return of(filteredAvaliacoes);
   }
 
+  getMock(): any[] {
+    return [
+      {
+        idAluno: '3',
+        idNota: '1',
+        docente: 'Otávio Queiroz',
+        aluno: 'Pedro Torres',
+        materia: 'Matemática',
+        turma: 'Turma 01',
+        nomeAvaliacao: 'Prova 1',
+        nota: '10.0',
+        data: '2024-08-06',
+      },
+      {
+        idAluno: '3',
+        idNota: '2',
+        docente: 'Otávio Queiroz',
+        aluno: 'Pedro Torres',
+        materia: 'Matemática',
+        turma: 'Turma 02',
+        nomeAvaliacao: 'Prova 2',
+        nota: '9.0', 
+        data: '2024-10-06',
+      }
+    ]
+  }
 }
