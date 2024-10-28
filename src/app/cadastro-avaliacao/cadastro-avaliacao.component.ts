@@ -30,7 +30,6 @@ export class CadastroAvaliacaoComponent implements OnInit {
     } else {
       this.docentes = this.docenteService.getMock();
     }
-
   }
   
   turmas = ['Turma A', 'Turma B', 'Turma C', 'Turma D'];

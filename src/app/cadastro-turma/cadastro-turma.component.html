@@ -39,7 +39,7 @@
         <div class="mb-3">
           <label for="docente" class="form-label">Docente:</label>
           <select id="docente" formControlName="docente" class="form-select">
-            <option *ngFor="let docente of docentes" [value]="docente">{{ docente }}</option>
+            <option *ngFor="let docente of docentes" [value]="docente">{{ docente.nome }}</option>
           </select>
           <div *ngIf="turmaForm.get('docente')?.invalid && turmaForm.get('docente')?.touched" class="text-danger">
             Docente é obrigatório.

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TurmaService } from '../services/turma.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocenteService } from '../services/docente.service';
 
@@ -16,45 +16,34 @@ import { DocenteService } from '../services/docente.service';
 })
 export class CadastroTurmaComponent implements OnInit {
   turmaForm!: FormGroup;
-  docentes: string[] = [];
-  materias = ['Matemática', 'Física', 'Química', 'História'];
-  isEditing = false;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-  ) {}
+    private docenteService: DocenteService
+  ) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (currentUser.role == 'DOCENTE') {
+      this.docentes = this.docenteService.getDocenteLogado(currentUser.name);
+    } else {
+      this.docentes = this.docenteService.getMock();
+    }
+  }
 
+  docentes: any[] = [];
+  materias = ['Matemática', 'Física', 'Química', 'História'];
+  isEditing = false;
+  
   ngOnInit(): void {
-    this.loadDocentes();
     this.initForm();
-  }
-
-  loadDocentes(): void {
-    const storedDocentes = localStorage.getItem('docentes');
-    if (storedDocentes) {
-      const docentesArray = JSON.parse(storedDocentes);
-      this.docentes = docentesArray.map((docente: { nome: any; }) => docente.nome);
-    } else {
-      alert('Nenhum docente encontrado.');
-    }
-  }
-
-  loadMaterias(): void {
-    const storedMaterias = localStorage.getItem('materias');
-    if (storedMaterias) {
-      this.materias = JSON.parse(storedMaterias);
-    } else {
-      alert('Nenhuma matéria encontrada.');
-    }
   }
 
   initForm(): void {
     this.turmaForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-      dataInicio: ['', Validators.required],
-      dataTermino: ['', Validators.required],
-      horario: ['', Validators.required],
+      dataInicio: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
+      dataTermino: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
+      horario: [formatDate(new Date(), 'HH:mm', 'en-US'), [Validators.required]],
       docente: ['', Validators.required],
       materia: ['', Validators.required]
     });
