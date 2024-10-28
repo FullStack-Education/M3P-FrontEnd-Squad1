@@ -21,6 +21,7 @@ export class CadastroAlunoComponent implements OnInit {
   generos = ['Masculino', 'Feminino', 'Outro'];
   estadosCivis = ['Solteiro(a)', 'Casado(a)', 'União Estável', 'Divorciado(a)', 'Viúvo(a)'];
   turmas = ['Turma A', 'Turma B', 'Turma C'];
+
   isEditing = false;
 
   constructor(
@@ -29,7 +30,7 @@ export class CadastroAlunoComponent implements OnInit {
     private router: Router,
     private alunoService: AlunoService
   ) {
-    let alunoRecebido = this.router.getCurrentNavigation()?.extras.state?.['event'];
+    let alunoRecebido = this.router.getCurrentNavigation()?.extras.state?.['aluno'];
 
     if (alunoRecebido) {
       this.isEditing = true;
@@ -41,6 +42,7 @@ export class CadastroAlunoComponent implements OnInit {
       this.aluno.rg = alunoRecebido.rg;
       this.aluno.expeditor = alunoRecebido.expeditor;
       this.aluno.naturalidade = alunoRecebido.naturalidade;
+      this.aluno.estadoCivil = alunoRecebido.estadoCivil;
       this.aluno.telefone = alunoRecebido.telefone;
       this.aluno.email = alunoRecebido.email;
       this.aluno.senha = alunoRecebido.senha;
@@ -51,7 +53,7 @@ export class CadastroAlunoComponent implements OnInit {
       this.aluno.endereco.complemento = alunoRecebido.endereco.complemento;
       this.aluno.endereco.bairro = alunoRecebido.endereco.bairro;
       this.aluno.endereco.referencia = alunoRecebido.endereco.referencia;
-      this.aluno.turma = alunoRecebido.turma;
+      this.turmas = alunoRecebido.turma;
     }
   }
 
@@ -69,7 +71,7 @@ export class CadastroAlunoComponent implements OnInit {
     telefone: '',
     email: '',
     senha: '',
-    perfil: 'Aluno',
+    perfil: 'ALUNO',
     endereco: {
       cep: '',
       cidade: '',
@@ -81,8 +83,7 @@ export class CadastroAlunoComponent implements OnInit {
     },
     avaliacoes: [],
     notaCountId: '',
-    turma: {},
-    materias: {}
+    turma: []
 }
 
   ngOnInit(): void {
@@ -92,25 +93,27 @@ export class CadastroAlunoComponent implements OnInit {
   initForm(): void {
     this.alunoForm = this.fb.group({
       nome: [`${this.aluno.nome}`, [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-      genero: ['', Validators.required],
-      dataNascimento: ['', Validators.required],
-      cpf: ['', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
-      rg: ['', [Validators.required, Validators.maxLength(20)]],
-      estadoCivil: ['', Validators.required],
-      telefone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\) \d \d{4,5}-\d{4}$/)]],
-      email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(8)]],
-      naturalidade: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-      enderecoCep: ['', [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
-      cidade: [''],
+      genero: [`${this.aluno.genero}`, Validators.required],
+      dataNascimento: [`${this.aluno.nascimento}`, Validators.required],
+      cpf: [`${this.aluno.cpf}`, [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
+      rg: [`${this.aluno.rg}`, [Validators.required, Validators.maxLength(20)]],
+      estadoCivil: [`${this.aluno.estadoCivil}`, Validators.required],
+      telefone: [`${this.aluno.telefone}`, [Validators.required, Validators.pattern(/^\(\d{2}\) \d \d{4,5}-\d{4}$/)]],
+      email: [`${this.aluno.email}`, [Validators.required, Validators.email]],
+      senha: [`${this.aluno.senha}`, [Validators.required, Validators.minLength(8)]],
+      naturalidade: [`${this.aluno.naturalidade}`, [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
+      enderecoCep: [`${this.aluno.endereco.cep}`, [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
+      cidade: [`${this.aluno.endereco.cidade}`],
       estado: [''],
-      logradouro: [''],
-      numero: [''],
-      complemento: [''],
-      bairro: [''],
-      pontoReferencia: [''],
-      turmas: [[], Validators.required]
+      logradouro: [`${this.aluno.endereco.logradouro}`],
+      numero: [`${this.aluno.endereco.numero}`],
+      complemento: [`${this.aluno.endereco.complemento}`],
+      bairro: [`${this.aluno.endereco.bairro}`],
+      pontoReferencia: [`${this.aluno.endereco.referencia}`],
+      turmas: [`${this.aluno.turma}`, Validators.required]
     });
+
+    this.buscarEndereco();
   }
 
 
@@ -148,7 +151,7 @@ export class CadastroAlunoComponent implements OnInit {
       localStorage.setItem('alunos', JSON.stringify(alunos));
 
       alert('Cadastro realizado com sucesso!');
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.');
     }
