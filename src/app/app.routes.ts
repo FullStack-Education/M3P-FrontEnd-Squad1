@@ -9,15 +9,19 @@ import { ListagemDocentesComponent } from './listagem-docentes/listagem-docentes
 import { ListagemNotasComponent } from './listagem-notas/listagem-notas.component';
 import { NgModule } from '@angular/core';
 import { docentesGuardGuard } from './guards/docentes-guard.guard';
+import { cadastroAvaGuard } from './guards/cadastro-ava.guard';
+import { cadastroTurmaGuard } from './guards/cadastro-turma.guard';
+import { cadastroAlunoGuard } from './guards/cadastro-aluno.guard';
+import { cadastroDocenteGuard } from './guards/cadastro-docente.guard';
 import { notasGuard } from './guards/notas.guard';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'home', component: HomeComponent, data: { title: 'Início'} },
-  { path: 'cadastro-docente', component: CadastroDocenteComponent, data: { title: 'Cadastro de Docente'} },
-  { path: 'cadastro-aluno', component: CadastroAlunoComponent, data: { title: 'Cadastro de Aluno'} },
-  { path: 'cadastro-turma', component: CadastroTurmaComponent, data: { title: 'Cadastro de Turma'} },
-  { path: 'cadastro-avaliacao', component: CadastroAvaliacaoComponent, data: { title: 'Cadastro de Avaliação'} },
+  { path: 'cadastro-docente', component: CadastroDocenteComponent, canActivate: [cadastroDocenteGuard], data: { title: 'Cadastro de Docente'} },
+  { path: 'cadastro-aluno', component: CadastroAlunoComponent, canActivate: [cadastroAlunoGuard], data: { title: 'Cadastro de Aluno'} },
+  { path: 'cadastro-turma', component: CadastroTurmaComponent, canActivate: [cadastroTurmaGuard], data: { title: 'Cadastro de Turma'} },
+  { path: 'cadastro-avaliacao', component: CadastroAvaliacaoComponent, canActivate: [cadastroAvaGuard], data: { title: 'Cadastro de Avaliação'} },
   { path: 'listagem-docentes', component: ListagemDocentesComponent, canActivate: [docentesGuardGuard], data: { title: 'Listagem de Docentes'} },
   { path: 'listagem-notas', component: ListagemNotasComponent, canActivate: [notasGuard], data: { title: 'Listagem de Notas'} }
 ];

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AlunoService } from '../services/aluno.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home-admin',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './home-admin.component.html',
   styleUrls: ['./home-admin.component.css']
 })
@@ -14,29 +16,37 @@ export class HomeAdminComponent implements OnInit {
   docentesCadastrados: number = 0;
   turmasCadastradas: number = 0;
 
-  alunos: any[] = [];
+  alunos = this.alunoService.getMock();
+  filteredAlunos: any[] = [];
+
+  searchQuery: any;
 
   constructor(
     private router: Router,
+    private alunoService: AlunoService
   ) {}
 
   ngOnInit() {
-    this.alunosCadastrados = 120;
+    this.alunosCadastrados = this.alunoService.getMock().length;
     this.docentesCadastrados = 25;
     this.turmasCadastradas = 8;
 
-    this.alunos = [
-      { nome: 'João Silva', idade: 20, email: 'joao@example.com' },
-      { nome: 'Maria Oliveira', idade: 22, email: 'maria@example.com' },
-      { nome: 'Carlos Santos', idade: 19, email: 'carlos@example.com' },
-    ];
+    this.filteredAlunos = [...this.alunos];
   }
 
-  pesquisarAluno(query: string) {
-    alert('Função de pesquisa ainda não implementada.');
+  onSearch(searchQuery: string) {
+    if (searchQuery) {
+      this.filteredAlunos = this.alunos.filter(aluno =>
+        aluno.nome.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        aluno.email.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        aluno.id.toString() == this.searchQuery
+      );
+    } else {
+      this.filteredAlunos = [...this.alunos];
+    }
   }
 
   verMaisAluno(aluno: any) {
-    this.router.navigate(['/cadastro-aluno']);
+    this.router.navigate(['/cadastro-aluno'], { state: { aluno } });
   }
 }

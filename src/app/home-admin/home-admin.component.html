@@ -32,26 +32,35 @@
   <div id="pesquisar-aluno" class="row mb-4">
     <div class="col">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Pesquisar aluno por nome, telefone ou email">
-        <button class="btn btn-primary" (click)="pesquisarAluno('')">Pesquisar</button>
+        <input
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch(searchQuery)"
+        type="text" 
+        class="form-control"
+        placeholder="Pesquisar aluno por nome, telefone ou email"/>
+
+        <button class="btn btn-primary" (click)="onSearch(searchQuery)">Pesquisar</button>
       </div>
     </div>
   </div>
 
   <h1> Alunos </h1>
   <div id="alunos" class="row">
-    <div class="col-md-4 mb-4" *ngFor="let aluno of alunos">
+
+    <div class="col-md-4 mb-4" *ngFor="let aluno of filteredAlunos">
       <div class="card">
         <div class="card-body">
           <img src="assets/user-icon.png" alt="Foto do aluno" class="user-icon">
           <h5 class="card-title">
             <i class="fas fa-user"></i> {{ aluno.nome }}
           </h5>
+          <p class="card-text">Id: {{ aluno.id }}</p>
           <p class="card-text">Idade: {{ aluno.idade }}</p>
           <p class="card-text">Email: {{ aluno.email }}</p>
           <button class="btn btn-secondary" (click)="verMaisAluno(aluno)">Ver mais</button>
         </div>
       </div>
     </div>
+
   </div>
 </div>

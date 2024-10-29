@@ -83,7 +83,7 @@ describe('CadastroDocenteComponent', () => {
   describe('Cancel and Not Implemented Functions', () => {
     it('should navigate to the home page on cancel', () => {
       component.onCancel();
-      expect(router.navigate).toHaveBeenCalledWith(['/']);
+      expect(router.navigate).toHaveBeenCalledWith(['/home']);
     });
 
     it('should display an alert on calling onEdit', () => {
