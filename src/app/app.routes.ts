@@ -13,6 +13,7 @@ import { cadastroAvaGuard } from './guards/cadastro-ava.guard';
 import { cadastroTurmaGuard } from './guards/cadastro-turma.guard';
 import { cadastroAlunoGuard } from './guards/cadastro-aluno.guard';
 import { cadastroDocenteGuard } from './guards/cadastro-docente.guard';
+import { notasGuard } from './guards/notas.guard';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -22,7 +23,7 @@ export const routes: Routes = [
   { path: 'cadastro-turma', component: CadastroTurmaComponent, canActivate: [cadastroTurmaGuard], data: { title: 'Cadastro de Turma'} },
   { path: 'cadastro-avaliacao', component: CadastroAvaliacaoComponent, canActivate: [cadastroAvaGuard], data: { title: 'Cadastro de Avaliação'} },
   { path: 'listagem-docentes', component: ListagemDocentesComponent, canActivate: [docentesGuardGuard], data: { title: 'Listagem de Docentes'} },
-  { path: 'listagem-notas', component: ListagemNotasComponent, data: { title: 'Listagem de Notas'} }
+  { path: 'listagem-notas', component: ListagemNotasComponent, canActivate: [notasGuard], data: { title: 'Listagem de Notas'} }
 ];
 
 @NgModule({

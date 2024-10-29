@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { AvaliacaoService } from '../services/avaliacao.service';
 
 @Component({
   selector: 'app-listagem-notas',
@@ -9,7 +10,11 @@ import { Component } from '@angular/core';
   styleUrl: './listagem-notas.component.css'
 })
 export class ListagemNotasComponent {
+
+  constructor(private avaliacaoService: AvaliacaoService) { }
+
   avaliacoes: any[] = [];
+  aluno: any;
 
   ngOnInit() {
     this.buscarAvaliacoes();
@@ -18,16 +23,21 @@ export class ListagemNotasComponent {
   buscarAvaliacoes() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
     if (currentUser && currentUser.role === 'ALUNO') {
-      this.avaliacoes = this.getAvaliacoesDoAluno(currentUser.name);
-    } else {
-      alert('Acesso restrito para alunos.');
+      this.avaliacoes = this.avaliacaoService.getMock()
+      .sort((a: any, b: any) => new Date(a.data).getTime() - new Date(b.data).getTime());
+  
+      for(let nota of this.avaliacoes) {
+        nota.data = this.formataData(nota.data)
+      }
     }
+
   }
 
-  getAvaliacoesDoAluno(nomeAluno: string): any[] {
-    const todasAvaliacoes = JSON.parse(localStorage.getItem('avaliacoes') || '[]');
-    return todasAvaliacoes.filter((avaliacao: any) =>
-      avaliacao.aluno.toLowerCase() === nomeAluno.toLowerCase()
-    ).sort((a: any, b: any) => new Date(a.dataInicio).getTime() - new Date(b.dataInicio).getTime());
+  formataData(data: string) {
+    let arrayData = data.split('-')
+    let dia = arrayData[2];
+    let mes = arrayData[1];
+    let ano = arrayData[0];
+    return dia + '/' + mes + '/' + ano
   }
 }
