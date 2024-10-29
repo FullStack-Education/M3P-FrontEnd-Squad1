@@ -145,9 +145,10 @@
         </div>
 
         <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary me-2" [disabled]="!alunoForm.valid">Salvar</button>
-          <button type="button" class="btn btn-secondary me-2" (click)="onEdit()" [disabled]="!alunoForm.valid">Editar</button>
-          <button type="button" class="btn btn-danger" (click)="onDelete()" [disabled]="!alunoForm.valid">Deletar</button>
+          <button type="submit" class="btn btn-primary me-2" [disabled]="isEditing">Salvar</button>
+
+          <button type="button" class="btn btn-secondary me-2" (click)="onEdit()" [disabled]="!isEditing">Editar</button>
+          <button type="button" class="btn btn-danger" (click)="onDelete()" [disabled]="!isEditing">Deletar</button>
           <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
         </div>
       </form>
