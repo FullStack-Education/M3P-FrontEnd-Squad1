@@ -27,14 +27,14 @@ export class ListagemDocentesComponent implements OnInit {
   onSearch(searchQuery: string) {
     if (searchQuery) {
       this.filteredDocentes = this.docentes.filter(docente =>
-        docente.nome.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        docente.email.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        docente.id.toString() == this.searchQuery
+        docente.nome.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        docente.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        docente.id.toString() === searchQuery
       );
     } else {
       this.filteredDocentes = [...this.docentes];
     }
-  }
+  }  
 
   onViewDocente(event: Event) {
     this.router.navigate(['/cadastro-docente'], { state: { event } });
