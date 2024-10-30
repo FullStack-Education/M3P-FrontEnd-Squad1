@@ -36,14 +36,13 @@ export class LoginService {
   }
 
 
-  
+
 
   getCursos() {
 
     let url = 'http://localhost:8080/cursos';
-    let token = localStorage.getItem('token');
+    let token = sessionStorage.getItem('token');
 
-    console.log('GET!!!')
     console.log(token)
 
     let headers = new HttpHeaders({

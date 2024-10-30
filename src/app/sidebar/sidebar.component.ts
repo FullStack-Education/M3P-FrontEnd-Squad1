@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
+
   userRole: string = '';
   isCollapsed: boolean = false;
   isMobile: boolean = false;
@@ -19,8 +20,7 @@ export class SidebarComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    this.userRole = currentUser.role || '';
+    this.userRole = sessionStorage.getItem('role') || '';
 
     this.checkIfMobile();
 
@@ -47,7 +47,9 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('role');
+
     this.router.navigate(['/']);
   }
 }

@@ -23,7 +23,8 @@ export class LoginComponent {
   }
 
   token = {
-    token: ''
+    token: '',
+    role: ''
   };
 
   cursos: any;
@@ -31,6 +32,8 @@ export class LoginComponent {
   onSubmit() {
     const { email, password } = this.loginForm.value;
     this.loginService.login(email, password).subscribe(response =>  this.setToken(response));
+
+    this.router.navigate(['/home']);
 
     // const usersMock = [
     //   { email: 'admin@scholargate.com', password: 'admin123', role: 'ADMINISTRADOR', name: 'Marina Oliveira' },
@@ -51,16 +54,11 @@ export class LoginComponent {
   setToken(response: any) {
     this.token = { ...response };
     
-    sessionStorage.setItem('token', this.token.token)
-
-    console.log(this.token.token);
+    sessionStorage.setItem('token', this.token.token);
+    sessionStorage.setItem('role', this.token.role)
   }
 
-  setCursos(response: any) {
-    this.cursos = { ...response };
 
-    console.log(this.cursos);
-  }
 
 
   onRegister() {
@@ -68,6 +66,12 @@ export class LoginComponent {
   }
 
   onForgotPassword() {
-    this.loginService.getCursos().subscribe(response => this.setCursos(response))
+    this.loginService.getCursos().subscribe(response => console.log(response))
+  }
+
+  setCursos(response: any) {
+    this.cursos = { ...response };
+
+    console.log(this.cursos);
   }
 }

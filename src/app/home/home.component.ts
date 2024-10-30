@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   userRole: string = '';
 
   ngOnInit() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    this.userRole = currentUser.role || '';
+    const currentUser = sessionStorage.getItem('role') || '{}';
+    this.userRole = currentUser || '';
   }
 }

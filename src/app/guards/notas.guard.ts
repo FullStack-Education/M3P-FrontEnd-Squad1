@@ -5,7 +5,7 @@ export const notasGuard: CanActivateFn = (route, state) => {
 
   const router = inject(Router);
 
-  if (JSON.parse(localStorage['currentUser']).role == 'ALUNO') {
+  if (sessionStorage.getItem('role') == 'ALUNO') {
     return true;
   } else {
     router.navigate(['/']);

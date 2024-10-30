@@ -5,8 +5,8 @@ export const cadastroAvaGuard: CanActivateFn = (route, state) => {
 
   const router = inject(Router);
   
-  if (JSON.parse(localStorage['currentUser']).role == 'ADMINISTRADOR'
-|| JSON.parse(localStorage['currentUser']).role == 'DOCENTE') {
+  if (sessionStorage.getItem('role') == 'ADMIN'
+|| sessionStorage.getItem('role') == 'PROFESSOR') {
     return true;
   } else {
     router.navigate(['/']);
