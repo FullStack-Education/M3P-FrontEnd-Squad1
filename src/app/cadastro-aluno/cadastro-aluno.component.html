@@ -135,7 +135,7 @@
           <div class="form-group">
             <label for="turmas">Turmas:</label>
             <select id="turmas" formControlName="turmas" multiple class="form-select">
-              <option *ngFor="let turma of turmas" [value]="turma">{{ turma }}</option>
+              <option *ngFor="let turma of turmas" [value]="turma">{{ turma.nomeTurma }}</option>
             </select>
           </div>
           

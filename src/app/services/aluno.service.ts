@@ -1,4 +1,6 @@
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -6,18 +8,36 @@ import { Injectable } from '@angular/core';
 export class AlunoService {
   private readonly STORAGE_KEY = 'alunos';
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
+  
+  getTurmas(): Observable<any> {
+    let url = 'http://localhost:8080/turmas';
+    let token = sessionStorage.getItem('token');
+
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
+
+    return this.http.get<any>(url, { headers });
+  }
+
+
+
+
+
 
   saveAluno(aluno: any): void {
-    const alunos = this.getalunos();
-    alunos.push(aluno);
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(alunos));
+    // const alunos = this.getalunos();
+    // alunos.push(aluno);
+    // localStorage.setItem(this.STORAGE_KEY, JSON.stringify(alunos));
   }
 
   getalunos(): any[] {
     const alunos = localStorage.getItem(this.STORAGE_KEY);
     return alunos ? JSON.parse(alunos) : [];
   }
+
+  
 
   getMock(): any[] {
     return [

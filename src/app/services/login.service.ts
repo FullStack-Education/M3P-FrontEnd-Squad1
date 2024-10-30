@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
@@ -31,23 +31,6 @@ export class LoginService {
     }
 
     alert(errorMsg);
-    return throwError(errorMsg);
-  }
-
-
-
-
-  getCursos() {
-
-    let url = 'http://localhost:8080/cursos';
-    let token = sessionStorage.getItem('token');
-
-    console.log(token)
-
-    let headers = new HttpHeaders({
-      'Authorization' : `${token}`
-    })
-
-    return this.http.get(url, { headers });
+    return throwError(() => new Error(errorMsg));
   }
 }

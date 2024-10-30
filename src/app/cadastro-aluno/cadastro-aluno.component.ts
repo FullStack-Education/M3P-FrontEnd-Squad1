@@ -20,9 +20,9 @@ export class CadastroAlunoComponent implements OnInit {
 
   generos = ['Masculino', 'Feminino', 'Outro'];
   estadosCivis = ['Solteiro(a)', 'Casado(a)', 'União Estável', 'Divorciado(a)', 'Viúvo(a)'];
-  turmas = ['Turma A', 'Turma B', 'Turma C'];
-
+  turmas: any[] = [];
   isEditing = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -88,6 +88,13 @@ export class CadastroAlunoComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.buscaTurmas();
+  }
+
+  buscaTurmas() {
+    return this.alunoService.getTurmas().subscribe(response => {
+      this.turmas = response;
+    });
   }
 
   initForm(): void {
@@ -116,8 +123,6 @@ export class CadastroAlunoComponent implements OnInit {
     this.buscarEndereco();
   }
 
-
-
   buscarEndereco(): void {
     const cep = this.alunoForm.get('enderecoCep')?.value;
     if (cep) {
@@ -139,22 +144,22 @@ export class CadastroAlunoComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.alunoForm.valid) {
-      const aluno = this.alunoForm.value;
-      const alunoToSave = {
-        ...aluno, role: "ALUNO", id: this.generateUniqueId()
-      }
-      alunoToSave.id = this.generateUniqueId();
+    // if (this.alunoForm.valid) {
+    //   const aluno = this.alunoForm.value;
+    //   const alunoToSave = {
+    //     ...aluno, role: "ALUNO", id: this.generateUniqueId()
+    //   }
+    //   alunoToSave.id = this.generateUniqueId();
 
-      const alunos = JSON.parse(localStorage.getItem('alunos') || '[]');
-      alunos.push(alunoToSave);
-      localStorage.setItem('alunos', JSON.stringify(alunos));
+    //   const alunos = JSON.parse(localStorage.getItem('alunos') || '[]');
+    //   alunos.push(alunoToSave);
+    //   localStorage.setItem('alunos', JSON.stringify(alunos));
 
-      alert('Cadastro realizado com sucesso!');
-      this.router.navigate(['/home']);
-    } else {
-      alert('Por favor, preencha todos os campos obrigatórios.');
-    }
+    //   alert('Cadastro realizado com sucesso!');
+    //   this.router.navigate(['/home']);
+    // } else {
+    //   alert('Por favor, preencha todos os campos obrigatórios.');
+    // }
   }
 
   onEdit(): void {
@@ -168,9 +173,4 @@ export class CadastroAlunoComponent implements OnInit {
   onCancel(): void {
     this.router.navigate(['/home']);
   }
-
-  private generateUniqueId(): string {
-    return Math.random().toString(36).substr(2, 9);
-  }
-
 }
