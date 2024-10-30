@@ -78,10 +78,48 @@ export class DocenteService {
           numero: '',
           complemento: '',
           bairro: '',
+          referencia: ''
+        },
+        materias: {}
+      },
+      {
+        id: '20',
+        nome: 'Professor Silvério',
+        genero: '',
+        nascimento: '',
+        cpf: '',
+        rg: '',
+        idade: '',
+        expeditor: '',
+        naturalidade: '',
+        estadoCivil: '',
+        telefone: '',
+        email: 'docente@scholargate.com',
+        senha: 'docente123',
+        perfil: 'Docente',
+        endereco: {
+          cep: '',
+          cidade: '',
+          logradouro: '',
+          numero: '',
+          complemento: '',
+          bairro: '',
           referencia: '',
-        }
+        },
+        materias: {}
       }
     ]
+  }
+
+    getDocenteLogado(nome: String) {
+      let docentes = this.getMock();
+
+      for (let docente of docentes) {
+        if(docente.nome == nome) {
+          return [docente];
+        }
+      }
+    return []
   }
 
 }

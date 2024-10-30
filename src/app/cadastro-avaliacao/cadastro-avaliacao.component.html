@@ -8,7 +8,7 @@
         <div class="mb-3">
           <label for="aluno" class="form-label">Aluno:</label>
           <select id="aluno" formControlName="aluno" class="form-select">
-            <option *ngFor="let aluno of alunos" [value]="aluno">{{ aluno }}</option>
+            <option *ngFor="let aluno of alunos" [value]="aluno">{{ aluno.nome }}</option>
           </select>
           <div *ngIf="avaliacaoForm.get('aluno')?.invalid && avaliacaoForm.get('aluno')?.touched" class="text-danger">
             Aluno é obrigatório.
@@ -29,7 +29,7 @@
         <div class="mb-3">
           <label for="docente" class="form-label">Docente:</label>
           <select id="docente" formControlName="docente" class="form-select">
-            <option *ngFor="let docente of docentes" [value]="docente">{{ docente }}</option>
+            <option *ngFor="let docente of docentes" [value]="docente">{{ docente.nome }}</option>
           </select>
           <div *ngIf="avaliacaoForm.get('docente')?.invalid && avaliacaoForm.get('docente')?.touched"
             class="text-danger">

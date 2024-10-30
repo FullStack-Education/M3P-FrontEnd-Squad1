@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CommonModule, formatDate } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocenteService } from '../services/docente.service';
+import { AlunoService } from '../services/aluno.service';
 
 @Component({
   selector: 'app-cadastro-avaliacao',
@@ -14,75 +15,47 @@ import { DocenteService } from '../services/docente.service';
   styleUrls: ['./cadastro-avaliacao.component.css']
 })
 export class CadastroAvaliacaoComponent implements OnInit {
-  avaliacaoForm!: FormGroup;
-  docentes: string[] = [];
-  turmas: string[] = [];
-  materias = ['Matemática', 'Física', 'Química', 'História'];
-  alunos = ['Pedro Torres'];
 
+  avaliacaoForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private router: Router,
-  ) {}
+    private alunoService: AlunoService,
+    private docenteService: DocenteService
+  ) {
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    if (currentUser.role == 'DOCENTE') {
+      this.docentes = this.docenteService.getDocenteLogado(currentUser.name);
+    } else {
+      this.docentes = this.docenteService.getMock();
+    }
+  }
+  
+  turmas = ['Turma A', 'Turma B', 'Turma C', 'Turma D'];
+  materias = ['Matemática', 'Física', 'Química', 'História'];
+
+  alunos = this.alunoService.getMock();
+  docentes: any[] = [];
 
   ngOnInit(): void {
-    this.loadDocentes();
-    this.loadTurmas();
-    this.loadAlunos();
-    this.initForm();
+    this.initForm();    
   }
 
   initForm(): void {
     this.avaliacaoForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(64)]],
-      dataInicio: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), Validators.required],
-      dataTermino: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), Validators.required],
-      horario: [formatDate(new Date(), 'HH:mm', 'en-US'), Validators.required],
-      docente: ['', Validators.required],
-      materia: ['', Validators.required],
-      turma: ['', Validators.required],
-      aluno: ['', Validators.required],
+      dataInicio: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
+      dataTermino: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
+      horario: [formatDate(new Date(), 'HH:mm', 'en-US'), [Validators.required]],
+      docente: ['', [Validators.required]],
+      materia: ['', [Validators.required]],
+      turma: ['', [Validators.required]],
+      aluno: ['', [Validators.required]],
       nota: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
     });
   }
 
-  loadDocentes(): void {
-    const storedDocentes = localStorage.getItem('docentes');
-    if (storedDocentes) {
-      const docentesArray = JSON.parse(storedDocentes);
-      this.docentes = docentesArray.map((docente: any) => docente.nome);
-    } else {
-      alert('Nenhum docente encontrado.');
-    }
-  }
-
-  loadTurmas(): void {
-    const storedTurmas = localStorage.getItem('turmas');
-    if (storedTurmas) {
-      const turmasArray = JSON.parse(storedTurmas);
-      this.turmas = turmasArray.map((turma: any) => turma.nome);
-    } else {
-      alert('Nenhuma turma encontrada.');
-    }
-  }
-
-  loadAlunos(): void {
-    const storedAlunos = localStorage.getItem('alunos');
-    
-    let alunosArray: string[] = [];
-  
-    if (storedAlunos) {
-      alunosArray = JSON.parse(storedAlunos).map((aluno: any) => aluno.nome);
-    } else {
-      alert('Nenhum aluno encontrado no localStorage.');
-    }
-  
-    this.alunos = [...new Set([...this.alunos, ...alunosArray])];
-  
-    if (this.alunos.length === 0) {
-      alert('Nenhum aluno encontrado.');
-    }
-  }
 
   onSubmit(): void {
     if (this.avaliacaoForm.valid) {
@@ -110,6 +83,8 @@ export class CadastroAvaliacaoComponent implements OnInit {
   onCancel(): void {
     this.router.navigate(['/']);
   }
+
+
 
   private generateUniqueId(): string {
     return Math.random().toString(36).substr(2, 9);
