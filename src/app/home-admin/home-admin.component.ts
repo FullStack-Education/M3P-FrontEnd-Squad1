@@ -12,11 +12,14 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./home-admin.component.css']
 })
 export class HomeAdminComponent implements OnInit {
+
+  
   alunosCadastrados: number = 0;
   docentesCadastrados: number = 0;
   turmasCadastradas: number = 0;
 
   alunos = this.alunoService.getMock();
+
   filteredAlunos: any[] = [];
 
   searchQuery: any;

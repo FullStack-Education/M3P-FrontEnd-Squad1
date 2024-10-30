@@ -5,7 +5,7 @@ export const cadastroDocenteGuard: CanActivateFn = (route, state) => {
 
   const router = inject(Router);
   
-  if (sessionStorage.getItem('role') == 'ADMINs') {
+  if (sessionStorage.getItem('role') == 'ADMIN') {
     return true;
   } else {
     router.navigate(['/']);

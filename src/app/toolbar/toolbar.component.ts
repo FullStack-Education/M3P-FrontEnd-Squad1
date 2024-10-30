@@ -20,9 +20,8 @@ export class ToolbarComponent {
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    this.userName = currentUser.name || 'Usuário';
-    this.userRole = currentUser.role || '';
+    this.userName = sessionStorage.getItem('nome') || '';
+    this.userRole = sessionStorage.getItem('role') || '';
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from "@angular/common/http";
-import { catchError, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,7 @@ export class LoginService {
   constructor(private http:HttpClient) { }
 
 
-  login(login: string, senha: string) {
-
+  login(login: string, senha: string): Observable<any> {
     let url = 'http://localhost:8080/login';
 
     const body = {
@@ -19,7 +18,7 @@ export class LoginService {
       senha: `${senha}`
     }
 
-    return this.http.post(url, body).pipe(catchError(this.handleError));
+    return this.http.post<any>(url, body).pipe(catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {

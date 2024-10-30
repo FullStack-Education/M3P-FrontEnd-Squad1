@@ -1,4 +1,4 @@
-import {Component, Inject, inject} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -24,54 +24,31 @@ export class LoginComponent {
 
   token = {
     token: '',
-    role: ''
+    role: '',
+    nome: ''
   };
-
-  cursos: any;
 
   onSubmit() {
     const { email, password } = this.loginForm.value;
-    this.loginService.login(email, password).subscribe(response =>  this.setToken(response));
+    this.loginService.login(email, password).subscribe(response =>  {
 
-    this.router.navigate(['/home']);
+      this.token = { ...response };
 
-    // const usersMock = [
-    //   { email: 'admin@scholargate.com', password: 'admin123', role: 'ADMINISTRADOR', name: 'Marina Oliveira' },
-    //   { email: 'docente@scholargate.com', password: 'docente123', role: 'DOCENTE', name: 'Otávio Queiroz' },
-    //   { email: 'aluno@scholargate.com', password: 'aluno123', role: 'ALUNO', name: 'Pedro Torres' }
-    // ];
+      sessionStorage.setItem('token', this.token.token);
+      sessionStorage.setItem('role', this.token.role);
+      sessionStorage.setItem('nome', this.token.nome);
 
-    // const user = usersMock.find(u => u.email === email && u.password === password);
-
-    // if (user) {
-    //   localStorage.setItem('currentUser', JSON.stringify(user));
-    //   this.router.navigate(['/home']);
-    // } else {
-    //   alert('Email ou senha incorretos. Tente novamente.');
-    // }
+      let role = response.role;
+      this.router.navigate(['/home'], { state: { role } });
+    });
   }
-
-  setToken(response: any) {
-    this.token = { ...response };
-    
-    sessionStorage.setItem('token', this.token.token);
-    sessionStorage.setItem('role', this.token.role)
-  }
-
-
-
 
   onRegister() {
     alert('Funcionalidade de cadastro em desenvolvimento.');
   }
 
   onForgotPassword() {
-    this.loginService.getCursos().subscribe(response => console.log(response))
+    alert('Funcionalidade de cadastro em desenvolvimento.');
   }
 
-  setCursos(response: any) {
-    this.cursos = { ...response };
-
-    console.log(this.cursos);
-  }
 }

@@ -10,6 +10,9 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['./home-aluno.component.css']
 })
 export class HomeAlunoComponent implements OnInit {
+
+
+  
   avaliacoes: any[] = []; 
   materias: string[] = [];
   cursosExtras: string[] = ['Artesanato', 'Informática', 'Artes Cênicas']; 
