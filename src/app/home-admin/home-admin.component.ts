@@ -18,7 +18,7 @@ export class HomeAdminComponent implements OnInit {
   docentesCadastrados: number = 0;
   turmasCadastradas: number = 0;
 
-  alunos = this.alunoService.getMock();
+  alunos: any[] = [];
 
   filteredAlunos: any[] = [];
 
@@ -30,11 +30,18 @@ export class HomeAdminComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.alunosCadastrados = this.alunoService.getMock().length;
     this.docentesCadastrados = 25;
-    this.turmasCadastradas = 8;
+    this.turmasCadastradas = 99;
 
-    this.filteredAlunos = [...this.alunos];
+    this.buscarAlunos();
+  }
+
+  buscarAlunos() {
+    return this.alunoService.getAlunos().subscribe(response => {
+      this.alunos = response;
+      this.alunosCadastrados = this.alunos.length;
+      this.filteredAlunos = [...this.alunos];
+    });
   }
 
   onSearch(searchQuery: string) {

@@ -46,14 +46,9 @@ export class CadastroAlunoComponent implements OnInit {
       this.aluno.telefone = alunoRecebido.telefone;
       this.aluno.email = alunoRecebido.email;
       this.aluno.senha = alunoRecebido.senha;
-      this.aluno.endereco.cep = alunoRecebido.endereco.cep;
-      this.aluno.endereco.cidade = alunoRecebido.endereco.cidade;
-      this.aluno.endereco.logradouro = alunoRecebido.endereco.logradouro;
-      this.aluno.endereco.numero = alunoRecebido.endereco.numero;
-      this.aluno.endereco.complemento = alunoRecebido.endereco.complemento;
-      this.aluno.endereco.bairro = alunoRecebido.endereco.bairro;
-      this.aluno.endereco.referencia = alunoRecebido.endereco.referencia;
-      this.turmas = alunoRecebido.turma;
+      //this.aluno.endereco.cep = alunoRecebido.cep;
+      this.aluno.endereco.numero = alunoRecebido.numero;
+
     }
   }
 

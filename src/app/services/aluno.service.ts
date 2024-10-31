@@ -21,9 +21,16 @@ export class AlunoService {
     return this.http.get<any>(url, { headers });
   }
 
+  getAlunos(): Observable<any> {
+    let url = 'http://localhost:8080/alunos';
+    let token = sessionStorage.getItem('token');
 
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
 
-
+    return this.http.get<any>(url, { headers });
+  }
 
 
   saveAluno(aluno: any): void {
@@ -32,10 +39,10 @@ export class AlunoService {
     // localStorage.setItem(this.STORAGE_KEY, JSON.stringify(alunos));
   }
 
-  getalunos(): any[] {
-    const alunos = localStorage.getItem(this.STORAGE_KEY);
-    return alunos ? JSON.parse(alunos) : [];
-  }
+  // getalunos(): any[] {
+  //   const alunos = localStorage.getItem(this.STORAGE_KEY);
+  //   return alunos ? JSON.parse(alunos) : [];
+  // }
 
   
 
