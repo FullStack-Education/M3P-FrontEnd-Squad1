@@ -82,10 +82,9 @@ export class CadastroTurmaComponent implements OnInit {
   }
 
   cadastrarTurma(turma: any) {
-    return this.docenteService.cadastrarTurma(turma).subscribe(response => {
-      this.materias = response;
-
+    return this.docenteService.cadastrarTurma(turma).subscribe( () => {
       alert('Cadastro realizado com sucesso!');
+      // this.materias = response;
     });
   }
 

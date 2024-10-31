@@ -6,32 +6,32 @@
 
 
         <div class="mb-3">
-          <label for="aluno" class="form-label">Aluno:</label>
-          <select id="aluno" formControlName="aluno" class="form-select">
-            <option *ngFor="let aluno of alunos" [value]="aluno">{{ aluno.nome }}</option>
+          <label for="aluno_id" class="form-label">Aluno:</label>
+          <select id="aluno_id" formControlName="aluno_id" class="form-select">
+            <option *ngFor="let aluno of alunos" [value]="aluno.id">{{ aluno.nome }}</option>
           </select>
-          <div *ngIf="avaliacaoForm.get('aluno')?.invalid && avaliacaoForm.get('aluno')?.touched" class="text-danger">
+          <div *ngIf="avaliacaoForm.get('aluno_id')?.invalid && avaliacaoForm.get('aluno_id')?.touched" class="text-danger">
             Aluno é obrigatório.
           </div>
         </div>
 
         <div class="mb-3">
-          <label for="turma" class="form-label">Turma:</label>
-          <select id="turma" formControlName="turma" class="form-select">
-            <option *ngFor="let turma of turmas" [value]="turma">{{ turma.nomeTurma }}</option>
+          <label for="turma_id" class="form-label">Turma:</label>
+          <select id="turma_id" formControlName="turma_id" class="form-select">
+            <option *ngFor="let turma of turmas" [value]="turma.id">{{ turma.nomeTurma }}</option>
           </select>
-          <div *ngIf="avaliacaoForm.get('turma')?.invalid && avaliacaoForm.get('turma')?.touched" class="text-danger">
+          <div *ngIf="avaliacaoForm.get('turma_id')?.invalid && avaliacaoForm.get('turma_id')?.touched" class="text-danger">
             Turma é obrigatório.
           </div>
         </div>
 
 
         <div class="mb-3">
-          <label for="docente" class="form-label">Docente:</label>
-          <select id="docente" formControlName="docente" class="form-select">
-            <option *ngFor="let docente of docentes" [value]="docente">{{ docente.nome }}</option>
+          <label for="docente_id" class="form-label">Docente:</label>
+          <select id="docente_id" formControlName="docente_id" class="form-select">
+            <option *ngFor="let docente of docentes" [value]="docente.id">{{ docente.nome }}</option>
           </select>
-          <div *ngIf="avaliacaoForm.get('docente')?.invalid && avaliacaoForm.get('docente')?.touched"
+          <div *ngIf="avaliacaoForm.get('docente_id')?.invalid && avaliacaoForm.get('docente_id')?.touched"
             class="text-danger">
             Docente é obrigatório.
           </div>
@@ -39,11 +39,11 @@
 
 
         <div class="mb-3">
-          <label for="materia" class="form-label">Matéria:</label>
-          <select id="materia" formControlName="materia" class="form-select">
-            <option *ngFor="let materia of materias" [value]="materia">{{ materia.nome }}</option>
+          <label for="materia_id" class="form-label">Matéria:</label>
+          <select id="materia_id" formControlName="materia_id" class="form-select">
+            <option *ngFor="let materia of materias" [value]="materia.id">{{ materia.nome }}</option>
           </select>
-          <div *ngIf="avaliacaoForm.get('materia')?.invalid && avaliacaoForm.get('materia')?.touched"
+          <div *ngIf="avaliacaoForm.get('materia_id')?.invalid && avaliacaoForm.get('materia_id')?.touched"
             class="text-danger">
             Matéria é obrigatória.
           </div>
@@ -60,9 +60,9 @@
 
 
         <div class="mb-3">
-          <label for="dataInicio" class="form-label">Data de Início:</label>
-          <input id="dataInicio" formControlName="dataInicio" type="date" class="form-control" />
-          <div *ngIf="avaliacaoForm.get('dataInicio')?.invalid && avaliacaoForm.get('dataInicio')?.touched"
+          <label for="dataNota" class="form-label">Data de Início:</label>
+          <input id="dataNota" formControlName="dataNota" type="date" class="form-control" />
+          <div *ngIf="avaliacaoForm.get('dataNota')?.invalid && avaliacaoForm.get('dataNota')?.touched"
             class="text-danger">
             Data de Início é obrigatória e deve ser válida.
           </div>
@@ -88,9 +88,9 @@
 
 
         <div class="mb-3">
-          <label for="nota" class="form-label">Nota Avaliação:</label>
-          <input id="nota" type="number" formControlName="nota" class="form-control" />
-          <div *ngIf="avaliacaoForm.get('nota')?.invalid && avaliacaoForm.get('nota')?.touched" class="text-danger">
+          <label for="valor" class="form-label">Nota Avaliação:</label>
+          <input id="valor" type="text" formControlName="valor" class="form-control" />
+          <div *ngIf="avaliacaoForm.get('valor')?.invalid && avaliacaoForm.get('valor')?.touched" class="text-danger">
             Nota Avaliação é obrigatória e deve estar entre 0 e 10.
           </div>
         </div>

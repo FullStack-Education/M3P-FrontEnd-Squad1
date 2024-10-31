@@ -66,29 +66,36 @@ export class CadastroAvaliacaoComponent implements OnInit {
   initForm(): void {
     this.avaliacaoForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(64)]],
-      dataInicio: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
+      dataNota: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
       dataTermino: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
       horario: [formatDate(new Date(), 'HH:mm', 'en-US'), [Validators.required]],
-      docente: ['', [Validators.required]],
-      materia: ['', [Validators.required]],
-      turma: ['', [Validators.required]],
-      aluno: ['', [Validators.required]],
-      nota: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
+      docente_id: ['', [Validators.required]],
+      materia_id: ['', [Validators.required]],
+      turma_id: ['', [Validators.required]],
+      aluno_id: ['', [Validators.required]],
+      valor: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
     });
   }
 
 
   onSubmit(): void {
     if (this.avaliacaoForm.valid) {
-      const newAvaliacao = { ...this.avaliacaoForm.value, id: this.generateUniqueId() };
+      const newAvaliacao = { ...this.avaliacaoForm.value };
 
       console.log(newAvaliacao)
 
-      // alert('Avaliação cadastrada com sucesso!');
+      this.cadastrarAvaliacao(newAvaliacao);
       // this.router.navigate(['/home']);
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.');
     }
+  }
+
+  cadastrarAvaliacao(avaliacao: any) {
+    return this.docenteService.cadastroAvaliacao(avaliacao).subscribe( response => {
+      
+      alert('Cadastro realizado com sucesso!');
+    });
   }
 
   onEdit(): void {

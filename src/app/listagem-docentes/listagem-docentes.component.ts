@@ -29,7 +29,6 @@ export class ListagemDocentesComponent implements OnInit {
     return this.docenteService.getDocentes().subscribe(response => {
       this.docentes = response;
       this.filteredDocentes = [...this.docentes];
-      console.log(this.filteredDocentes)
     });
   }
 

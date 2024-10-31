@@ -87,7 +87,7 @@ export class CadastroDocenteComponent implements OnInit {
     this.docenteForm = this.fb.group({
       nome: [`${this.docente.nome}`, [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
       genero: [`${this.docente.genero}`, Validators.required],
-      dataNascimento: [`${this.docente.nascimento}`, Validators.required],
+      nascimento: [`${this.docente.nascimento}`, Validators.required],
       cpf: [`${this.docente.cpf}`, [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
       rg: [`${this.docente.rg}`, [Validators.required, Validators.maxLength(20)]],
       estadoCivil: [`${this.docente.estadoCivil}`, Validators.required],
@@ -95,22 +95,78 @@ export class CadastroDocenteComponent implements OnInit {
       email: [`${this.docente.email}`, [Validators.required, Validators.email]],
       senha: [`${this.docente.senha}`, [Validators.required, Validators.minLength(8)]],
       naturalidade: [`${this.docente.naturalidade}`, [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-      enderecoCep: [`${this.docente.endereco.cep}`, [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
+      cep: [`${this.docente.endereco.cep}`, [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
       cidade: [this.docente.endereco.cidade],
       estado: [''],
       logradouro: [this.docente.endereco.logradouro],
       numero: [this.docente.endereco.numero],
       complemento: [this.docente.endereco.complemento],
       bairro: [this.docente.endereco.bairro],
-      pontoReferencia: [this.docente.endereco.referencia],
+      referencia: [this.docente.endereco.referencia],
       materias: [`${this.docente.materias}`, Validators.required]
     });
 
     this.buscarEndereco();
   }
 
+  onSubmit(): void {
+    if (this.docenteForm.valid) {
+      const docente = this.docenteForm.value;
+      const docenteToSave = { ...docente }
+
+      this.cadastrarUsuarioDocente(docenteToSave);
+      
+      //alert('Cadastro realizado com sucesso!');
+
+      //this.router.navigate(['/listagem-docentes']);
+
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+    }
+  }
+
+  private cadastrarUsuarioDocente(docente: any) {
+    this.docenteService.cadastrarUsuarioDocente(docente).subscribe( usuario => {
+      
+      
+      console.log(usuario)
+      console.log('AQUI')
+      console.log(docente)
+
+
+      this.cadastrarDocente(docente, usuario)
+    })
+  }
+
+  private cadastrarDocente(docente: any, usuario: any) {
+    let data = { ...docente, usuario_id: usuario.usuarioId }
+    
+    this.docenteService.cadastroDocente(data).subscribe(response => {
+
+      console.log("ENVIO e REPOSTA DO DOCENTE")
+      console.log(data)
+      console.log(response)
+    });
+  }
+
+
+
+
+
+  onEdit(): void {
+    alert('Editar funcionalidade não implementada.');
+  }
+
+  onDelete(): void {
+    alert('Deletar funcionalidade não implementada.');
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/home']);
+  }
+
   buscarEndereco(): void {
-    const cep = this.docenteForm.get('enderecoCep')?.value;
+    const cep = this.docenteForm.get('cep')?.value;
     if (cep) {
       this.viaCepService.buscarEndereco(cep).subscribe(
         endereco => {
@@ -127,41 +183,6 @@ export class CadastroDocenteComponent implements OnInit {
         }
       );
     }
-  }
-
-  onSubmit(): void {
-    if (this.docenteForm.valid) {
-      const docente = this.docenteForm.value;
-      const docenteToSave = {
-        ...docente, role: "DOCENTE", id: this.generateUniqueId()
-      }
-      docenteToSave.id = this.generateUniqueId();
-
-      const docentes = JSON.parse(localStorage.getItem('docentes') || '[]');
-      docentes.push(docenteToSave);
-      localStorage.setItem('docentes', JSON.stringify(docentes));
-
-      alert('Cadastro realizado com sucesso!');
-      this.router.navigate(['/listagem-docentes']);
-    } else {
-      alert('Por favor, preencha todos os campos obrigatórios.');
-    }
-  }
-
-  onEdit(): void {
-    alert('Editar funcionalidade não implementada.');
-  }
-
-  onDelete(): void {
-    alert('Deletar funcionalidade não implementada.');
-  }
-
-  onCancel(): void {
-    this.router.navigate(['/home']);
-  }
-
-  private generateUniqueId(): string {
-    return Math.random().toString(36).substr(2, 9);
   }
 
 }
