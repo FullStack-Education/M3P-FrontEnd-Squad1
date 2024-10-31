@@ -13,33 +13,36 @@ import { DocenteService } from '../services/docente.service';
 })
 export class ListagemDocentesComponent implements OnInit {
 
-  constructor(private router: Router) {}
-
-  docenteService = inject(DocenteService);
-
-  docentes = this.docenteService.getMock();
+  constructor(private router: Router,
+    private docenteService: DocenteService) {}
 
   searchQuery: string = '';
   filteredDocentes: any[] = [];
+  docentes: any[] = []
+
 
   ngOnInit(): void {
-    // this.docenteService.getDocentes().subscribe(response => {
-    //   this.docentes = response;
-    // });
+    this.carregarDocentes();
+  }
 
-    this.filteredDocentes = [...this.docentes];
+  carregarDocentes() {
+    return this.docenteService.getDocentes().subscribe(response => {
+      this.docentes = response;
+      this.filteredDocentes = [...this.docentes];
+      console.log(this.filteredDocentes)
+    });
   }
 
   onSearch(searchQuery: string) {
-    // if (searchQuery) {
-    //   this.filteredDocentes = this.docentes.filter(docente =>
-    //     docente.nome.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //     docente.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //     docente.id.toString() === searchQuery
-    //   );
-    // } else {
-    //   this.filteredDocentes = [...this.docentes];
-    // }
+    if (searchQuery) {
+      this.filteredDocentes = this.docentes.filter(docente =>
+        docente.nome.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        docente.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        docente.id.toString() === searchQuery
+      );
+    } else {
+      this.filteredDocentes = [...this.docentes];
+    }
   }  
 
   onViewDocente(docente: any) {

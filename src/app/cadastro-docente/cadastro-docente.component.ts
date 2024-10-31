@@ -40,19 +40,14 @@ export class CadastroDocenteComponent implements OnInit {
       this.docente.nascimento = docenteRecebido.nascimento;
       this.docente.cpf = docenteRecebido.cpf;
       this.docente.rg = docenteRecebido.rg;
-      this.docente.expeditor = docenteRecebido.expeditor;
       this.docente.naturalidade = docenteRecebido.naturalidade;
       this.docente.estadoCivil = docenteRecebido.estadoCivil;
       this.docente.telefone = docenteRecebido.telefone;
       this.docente.email = docenteRecebido.email;
-      this.docente.senha = docenteRecebido.senha;
-      this.docente.endereco.cep = docenteRecebido.endereco.cep;
-      this.docente.endereco.cidade = docenteRecebido.endereco.cidade;
-      this.docente.endereco.logradouro = docenteRecebido.endereco.logradouro;
-      this.docente.endereco.numero = docenteRecebido.endereco.numero;
-      this.docente.endereco.complemento = docenteRecebido.endereco.complemento;
-      this.docente.endereco.bairro = docenteRecebido.endereco.bairro;
-      this.docente.endereco.referencia = docenteRecebido.endereco.referencia;
+      //this.docente.endereco.cep = docenteRecebido.endereco.cep;
+      this.docente.endereco.numero = docenteRecebido.numero;
+      this.docente.endereco.complemento = docenteRecebido.complemento;
+      this.docente.endereco.referencia = docenteRecebido.referencia;
       this.materias = docenteRecebido.materias;
     }
   }

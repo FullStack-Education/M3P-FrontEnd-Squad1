@@ -18,23 +18,8 @@ export class DocenteService {
       'Authorization' : `${token}`
     })
 
-    return this.http.get<any>(url, { headers }).pipe(catchError(this.handleError))
+    return this.http.get<any>(url, { headers });
   }
-
-  handleError(error: HttpErrorResponse) {
-    let errorMsg = 'Usuário com login ou senha errados.'
-
-    if (error.error instanceof ErrorEvent) {
-      errorMsg = `Error: ${error.error.message}`;
-    } else {
-      errorMsg = `Error código: ${error.status}\nMessage: 'Usuário com login ou senha errados.`
-    }
-
-    alert(errorMsg);
-    return throwError(() => new Error(errorMsg));
-  }
-
-
 
 
   saveDocente(docente: any): void {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AlunoService } from '../services/aluno.service';
 import { FormsModule } from '@angular/forms';
+import { DocenteService } from '../services/docente.service';
 
 @Component({
   selector: 'app-home-admin',
@@ -18,7 +19,10 @@ export class HomeAdminComponent implements OnInit {
   docentesCadastrados: number = 0;
   turmasCadastradas: number = 0;
 
+  turmas: any[] = []
   alunos: any[] = [];
+  docentes: any[] = [];
+
 
   filteredAlunos: any[] = [];
 
@@ -26,14 +30,14 @@ export class HomeAdminComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private alunoService: AlunoService
+    private alunoService: AlunoService,
+    private docenteService: DocenteService
   ) {}
 
   ngOnInit() {
-    this.docentesCadastrados = 25;
-    this.turmasCadastradas = 99;
-
     this.buscarAlunos();
+    this.buscaTurmas();
+    this.buscaDocentes();
   }
 
   buscarAlunos() {
@@ -43,6 +47,21 @@ export class HomeAdminComponent implements OnInit {
       this.filteredAlunos = [...this.alunos];
     });
   }
+
+  buscaTurmas() {
+    return this.alunoService.getTurmas().subscribe(response => {
+      this.turmas = response;
+      this.turmasCadastradas = this.turmas.length;
+    });
+  }
+
+  buscaDocentes() {
+    return this.docenteService.getDocentes().subscribe(response => {
+      this.docentes = response;
+      this.docentesCadastrados = this.docentes.length;
+    });
+  }
+
 
   onSearch(searchQuery: string) {
     if (searchQuery) {
