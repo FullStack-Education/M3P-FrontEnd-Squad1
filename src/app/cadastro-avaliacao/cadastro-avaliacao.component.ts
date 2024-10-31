@@ -22,24 +22,45 @@ export class CadastroAvaliacaoComponent implements OnInit {
     private router: Router,
     private alunoService: AlunoService,
     private docenteService: DocenteService
-  ) {
-
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    if (currentUser.role == 'DOCENTE') {
-      this.docentes = this.docenteService.getDocenteLogado(currentUser.name);
-    } else {
-      this.docentes = this.docenteService.getMock();
-    }
-  }
+  ) {  }
   
-  turmas = ['Turma A', 'Turma B', 'Turma C', 'Turma D'];
-  materias = ['Matemática', 'Física', 'Química', 'História'];
-
-  alunos = this.alunoService.getMock();
+  alunos: any[] = [];
   docentes: any[] = [];
+  turmas: any[] =[];
+  materias: any[] =[];
+
 
   ngOnInit(): void {
-    this.initForm();    
+    this.initForm();
+    
+    this.buscarAlunos();
+    this.buscaTurmas();
+    this.buscaDocentes();
+    this.buscaMaterias();
+  }
+
+  buscarAlunos() {
+    return this.alunoService.getAlunos().subscribe(response => {
+      this.alunos = response;
+    });
+  }
+
+  buscaTurmas() {
+    return this.alunoService.getTurmas().subscribe(response => {
+      this.turmas = response;
+    });
+  }
+
+  buscaDocentes() {
+    return this.docenteService.getDocentes().subscribe(response => {
+      this.docentes = response;
+    });
+  }
+
+  buscaMaterias() {
+    return this.alunoService.getMaterias().subscribe(response => {
+      this.materias = response;
+    });
   }
 
   initForm(): void {
@@ -61,12 +82,10 @@ export class CadastroAvaliacaoComponent implements OnInit {
     if (this.avaliacaoForm.valid) {
       const newAvaliacao = { ...this.avaliacaoForm.value, id: this.generateUniqueId() };
 
-      const avaliacoes = JSON.parse(localStorage.getItem('avaliacoes') || '[]');
-      avaliacoes.push(newAvaliacao);
-      localStorage.setItem('avaliacoes', JSON.stringify(avaliacoes));
+      console.log(newAvaliacao)
 
-      alert('Avaliação cadastrada com sucesso!');
-      this.router.navigate(['/home']);
+      // alert('Avaliação cadastrada com sucesso!');
+      // this.router.navigate(['/home']);
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.');
     }

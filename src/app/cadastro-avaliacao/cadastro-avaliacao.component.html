@@ -18,7 +18,7 @@
         <div class="mb-3">
           <label for="turma" class="form-label">Turma:</label>
           <select id="turma" formControlName="turma" class="form-select">
-            <option *ngFor="let turma of turmas" [value]="turma">{{ turma }}</option>
+            <option *ngFor="let turma of turmas" [value]="turma">{{ turma.nomeTurma }}</option>
           </select>
           <div *ngIf="avaliacaoForm.get('turma')?.invalid && avaliacaoForm.get('turma')?.touched" class="text-danger">
             Turma é obrigatório.
@@ -41,7 +41,7 @@
         <div class="mb-3">
           <label for="materia" class="form-label">Matéria:</label>
           <select id="materia" formControlName="materia" class="form-select">
-            <option *ngFor="let materia of materias" [value]="materia">{{ materia }}</option>
+            <option *ngFor="let materia of materias" [value]="materia">{{ materia.nome }}</option>
           </select>
           <div *ngIf="avaliacaoForm.get('materia')?.invalid && avaliacaoForm.get('materia')?.touched"
             class="text-danger">

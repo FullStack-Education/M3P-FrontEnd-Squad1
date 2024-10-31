@@ -32,6 +32,17 @@ export class AlunoService {
     return this.http.get<any>(url, { headers });
   }
 
+  getMaterias(): Observable<any> {
+    let url = 'http://localhost:8080/materias';
+    let token = sessionStorage.getItem('token');
+
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
+
+    return this.http.get<any>(url, { headers });
+  }
+
 
   saveAluno(aluno: any): void {
     // const alunos = this.getalunos();
