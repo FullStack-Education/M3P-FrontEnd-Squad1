@@ -5,6 +5,7 @@ import { TurmaService } from '../services/turma.service';
 import { CommonModule, formatDate } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocenteService } from '../services/docente.service';
+import { AlunoService } from '../services/aluno.service';
 
 @Component({
   selector: 'app-cadastro-turma',
@@ -20,22 +21,39 @@ export class CadastroTurmaComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private docenteService: DocenteService
-  ) {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    if (currentUser.role == 'DOCENTE') {
-      this.docentes = this.docenteService.getDocenteLogado(currentUser.name);
-    } else {
-      this.docentes = this.docenteService.getMock();
-    }
-  }
+    private docenteService: DocenteService,
+    private alunoService: AlunoService
+  ) {  }
 
   docentes: any[] = [];
-  materias = ['Matemática', 'Física', 'Química', 'História'];
+  materias: any[] = [];
+  cursos: any[] = []
   isEditing = false;
   
   ngOnInit(): void {
     this.initForm();
+
+    this.buscaDocentes();
+    this.buscaMaterias();
+    this.buscaCursos();
+  }
+
+  buscaCursos() {
+    return this.docenteService.getCursos().subscribe(response => {
+      this.cursos = response;
+    });
+  }
+
+  buscaDocentes() {
+    return this.docenteService.getDocentes().subscribe(response => {
+      this.docentes = response;
+    });
+  }
+
+  buscaMaterias() {
+    return this.alunoService.getMaterias().subscribe(response => {
+      this.materias = response;
+    });
   }
 
   initForm(): void {
@@ -44,27 +62,31 @@ export class CadastroTurmaComponent implements OnInit {
       dataInicio: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
       dataTermino: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
       horario: [formatDate(new Date(), 'HH:mm', 'en-US'), [Validators.required]],
-      docente: ['', Validators.required],
-      materia: ['', Validators.required]
+      docente_id: ['', Validators.required],
+      materia_id: ['', Validators.required],
+      curso_id: ['', Validators.required]
     });
   }
 
   onSubmit(): void {
     if (this.turmaForm.valid) {
       const turma = this.turmaForm.value;
-      const turmaToSave = {
-        ...turma, id: this.generateUniqueId()
-      };
+      const turmaToSave = { ...turma };
 
-      const turmas = JSON.parse(localStorage.getItem('turmas') || '[]');
-      turmas.push(turmaToSave);
-      localStorage.setItem('turmas', JSON.stringify(turmas));
+      this.cadastrarTurma(turmaToSave)
 
-      alert('Cadastro realizado com sucesso!');
       this.router.navigate(['/home']);
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.');
     }
+  }
+
+  cadastrarTurma(turma: any) {
+    return this.docenteService.cadastrarTurma(turma).subscribe(response => {
+      this.materias = response;
+
+      alert('Cadastro realizado com sucesso!');
+    });
   }
 
   onEdit(): void {

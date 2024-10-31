@@ -21,6 +21,30 @@ export class DocenteService {
     return this.http.get<any>(url, { headers });
   }
 
+  getCursos(): Observable<any> {
+    let url = 'http://localhost:8080/cursos';
+    let token = sessionStorage.getItem('token');
+
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
+
+    return this.http.get<any>(url, { headers });
+  }
+
+  cadastrarTurma(turma: any): Observable<any> {
+    let url = 'http://localhost:8080/turmas';
+    let token = sessionStorage.getItem('token');
+
+    let data = { ...turma }
+
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
+
+    return this.http.post<any>(url, data, { headers });
+  }
+
 
   saveDocente(docente: any): void {
     // const docentes = this.getDocentes();
