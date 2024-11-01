@@ -116,9 +116,8 @@ export class CadastroDocenteComponent implements OnInit {
 
       this.cadastrarUsuarioDocente(docenteToSave);
       
-      //alert('Cadastro realizado com sucesso!');
-
-      //this.router.navigate(['/listagem-docentes']);
+      alert('Cadastro realizado com sucesso!');
+      this.router.navigate(['/listagem-docentes']);
 
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.');
@@ -127,31 +126,15 @@ export class CadastroDocenteComponent implements OnInit {
 
   private cadastrarUsuarioDocente(docente: any) {
     this.docenteService.cadastrarUsuarioDocente(docente).subscribe( usuario => {
-      
-      
-      console.log(usuario)
-      console.log('AQUI')
-      console.log(docente)
-
-
       this.cadastrarDocente(docente, usuario)
     })
   }
 
   private cadastrarDocente(docente: any, usuario: any) {
     let data = { ...docente, usuario_id: usuario.usuarioId }
-    
     this.docenteService.cadastroDocente(data).subscribe(response => {
-
-      console.log("ENVIO e REPOSTA DO DOCENTE")
-      console.log(data)
-      console.log(response)
     });
   }
-
-
-
-
 
   onEdit(): void {
     alert('Editar funcionalidade não implementada.');

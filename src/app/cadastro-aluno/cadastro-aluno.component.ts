@@ -20,6 +20,7 @@ export class CadastroAlunoComponent implements OnInit {
 
   generos = ['Masculino', 'Feminino', 'Outro'];
   estadosCivis = ['Solteiro(a)', 'Casado(a)', 'União Estável', 'Divorciado(a)', 'Viúvo(a)'];
+
   turmas: any[] = [];
   isEditing = false;
 
@@ -104,22 +105,60 @@ export class CadastroAlunoComponent implements OnInit {
       email: [`${this.aluno.email}`, [Validators.required, Validators.email]],
       senha: [`${this.aluno.senha}`, [Validators.required, Validators.minLength(8)]],
       naturalidade: [`${this.aluno.naturalidade}`, [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-      enderecoCep: [`${this.aluno.endereco.cep}`, [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
+      cep: [`${this.aluno.endereco.cep}`, [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
       cidade: [`${this.aluno.endereco.cidade}`],
       estado: [''],
       logradouro: [`${this.aluno.endereco.logradouro}`],
       numero: [`${this.aluno.endereco.numero}`],
       complemento: [`${this.aluno.endereco.complemento}`],
       bairro: [`${this.aluno.endereco.bairro}`],
-      pontoReferencia: [`${this.aluno.endereco.referencia}`],
-      turmas: [`${this.aluno.turma}`, Validators.required]
+      referencia: [`${this.aluno.endereco.referencia}`],
+      turma_id: [`${this.aluno.turma}`, Validators.required]
     });
 
     this.buscarEndereco();
   }
 
+  onSubmit(): void {
+    if (this.alunoForm.valid) {
+      const aluno = this.alunoForm.value;
+      const alunoToSave = { ...aluno }
+
+      this.cadastrarUsuarioAluno(alunoToSave);
+
+      alert('Cadastro realizado com sucesso!');
+      this.router.navigate(['/home']);
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+    }
+  }
+
+  private cadastrarUsuarioAluno(aluno: any) {
+    this.alunoService.cadastrarUsuarioAluno(aluno).subscribe( usuario => {
+      this.cadastrarAluno(aluno, usuario)
+    })
+  }
+
+  private cadastrarAluno(aluno: any, usuario: any) {
+    let data = { ...aluno, usuario_id: usuario.usuarioId }
+    this.alunoService.cadastrarAluno(data).subscribe(response => {
+    });
+  }
+
+  onEdit(): void {
+    alert('Editar funcionalidade não implementada.');
+  }
+
+  onDelete(): void {
+    alert('Deletar funcionalidade não implementada.');
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/home']);
+  }
+
   buscarEndereco(): void {
-    const cep = this.alunoForm.get('enderecoCep')?.value;
+    const cep = this.alunoForm.get('cep')?.value;
     if (cep) {
       this.viaCepService.buscarEndereco(cep).subscribe(
         endereco => {
@@ -136,36 +175,5 @@ export class CadastroAlunoComponent implements OnInit {
         }
       );
     }
-  }
-
-  onSubmit(): void {
-    // if (this.alunoForm.valid) {
-    //   const aluno = this.alunoForm.value;
-    //   const alunoToSave = {
-    //     ...aluno, role: "ALUNO", id: this.generateUniqueId()
-    //   }
-    //   alunoToSave.id = this.generateUniqueId();
-
-    //   const alunos = JSON.parse(localStorage.getItem('alunos') || '[]');
-    //   alunos.push(alunoToSave);
-    //   localStorage.setItem('alunos', JSON.stringify(alunos));
-
-    //   alert('Cadastro realizado com sucesso!');
-    //   this.router.navigate(['/home']);
-    // } else {
-    //   alert('Por favor, preencha todos os campos obrigatórios.');
-    // }
-  }
-
-  onEdit(): void {
-    alert('Editar funcionalidade não implementada.');
-  }
-
-  onDelete(): void {
-    alert('Deletar funcionalidade não implementada.');
-  }
-
-  onCancel(): void {
-    this.router.navigate(['/home']);
   }
 }

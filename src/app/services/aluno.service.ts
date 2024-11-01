@@ -44,16 +44,41 @@ export class AlunoService {
   }
 
 
-  saveAluno(aluno: any): void {
-    // const alunos = this.getalunos();
-    // alunos.push(aluno);
-    // localStorage.setItem(this.STORAGE_KEY, JSON.stringify(alunos));
+  cadastrarUsuarioAluno(aluno: any): Observable<any> {
+    let url = 'http://localhost:8080/cadastro';
+    let token = sessionStorage.getItem('token');
+
+    let data = { ...aluno }
+
+    let usuario = {
+      login: `${data.email}`,
+      senha: `${data.senha}`,
+      papel: "ALUNO"
+    }
+
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    });
+
+    return this.http.post<any>(url, usuario, { headers });
   }
 
-  // getalunos(): any[] {
-  //   const alunos = localStorage.getItem(this.STORAGE_KEY);
-  //   return alunos ? JSON.parse(alunos) : [];
-  // }
+  cadastrarAluno(aluno: any): Observable<any> {
+    let url = 'http://localhost:8080/alunos';
+    let token = sessionStorage.getItem('token');
+
+    let data = { ...aluno }
+
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
+
+    return this.http.post<any>(url, data, { headers });
+  }
+
+  
+
+
 
   
 

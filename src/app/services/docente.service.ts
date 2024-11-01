@@ -71,13 +71,11 @@ export class DocenteService {
       papel: "PROFESSOR"
     }
 
-    console.log(usuario)
-
     let headers = new HttpHeaders({
       'Authorization' : `${token}`
     });
 
-    return this.http.post<any>('http://localhost:8080/cadastro', usuario, { headers });
+    return this.http.post<any>(url, usuario, { headers });
   }
 
   cadastroDocente(docente: any): Observable<any> {
