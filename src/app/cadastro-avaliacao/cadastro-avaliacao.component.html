@@ -51,9 +51,9 @@
 
 
         <div class="mb-3">
-          <label for="nome" class="form-label">Nome da Avaliação:</label>
-          <input id="nome" formControlName="nome" type="text" class="form-control" />
-          <div *ngIf="avaliacaoForm.get('nome')?.invalid && avaliacaoForm.get('nome')?.touched" class="text-danger">
+          <label for="nomeAvaliacao" class="form-label">Nome da Avaliação:</label>
+          <input id="nomeAvaliacao" formControlName="nomeAvaliacao" type="text" class="form-control" />
+          <div *ngIf="avaliacaoForm.get('nomeAvaliacao')?.invalid && avaliacaoForm.get('nomeAvaliacao')?.touched" class="text-danger">
             Nome da Avaliação é obrigatório e deve ter entre 3 e 64 caracteres.
           </div>
         </div>

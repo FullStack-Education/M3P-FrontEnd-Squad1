@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TurmaService } from '../services/turma.service';
 import { CommonModule, formatDate } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocenteService } from '../services/docente.service';
@@ -11,7 +10,7 @@ import { AlunoService } from '../services/aluno.service';
   selector: 'app-cadastro-turma',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  providers: [TurmaService, DocenteService],
+  providers: [DocenteService, AlunoService],
   templateUrl: './cadastro-turma.component.html',
   styleUrls: ['./cadastro-turma.component.css']
 })

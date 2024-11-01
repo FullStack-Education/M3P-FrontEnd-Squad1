@@ -5,6 +5,7 @@ import { CommonModule, formatDate } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocenteService } from '../services/docente.service';
 import { AlunoService } from '../services/aluno.service';
+import { AvaliacaoService } from '../services/avaliacao.service';
 
 @Component({
   selector: 'app-cadastro-avaliacao',
@@ -21,7 +22,8 @@ export class CadastroAvaliacaoComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private alunoService: AlunoService,
-    private docenteService: DocenteService
+    private docenteService: DocenteService,
+    private avaliacaoService: AvaliacaoService
   ) {  }
   
   alunos: any[] = [];
@@ -65,7 +67,7 @@ export class CadastroAvaliacaoComponent implements OnInit {
 
   initForm(): void {
     this.avaliacaoForm = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(64)]],
+      nomeAvaliacao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(64)]],
       dataNota: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
       dataTermino: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
       horario: [formatDate(new Date(), 'HH:mm', 'en-US'), [Validators.required]],
@@ -81,9 +83,6 @@ export class CadastroAvaliacaoComponent implements OnInit {
   onSubmit(): void {
     if (this.avaliacaoForm.valid) {
       const newAvaliacao = { ...this.avaliacaoForm.value };
-
-      console.log(newAvaliacao)
-
       this.cadastrarAvaliacao(newAvaliacao);
       // this.router.navigate(['/home']);
     } else {
@@ -92,9 +91,10 @@ export class CadastroAvaliacaoComponent implements OnInit {
   }
 
   cadastrarAvaliacao(avaliacao: any) {
-    return this.docenteService.cadastroAvaliacao(avaliacao).subscribe( response => {
-      
-      alert('Cadastro realizado com sucesso!');
+    return this.avaliacaoService.cadastroAvaliacao(avaliacao).subscribe( response => {
+      console.log(response)
+
+      //alert('Cadastro realizado com sucesso!');
     });
   }
 
@@ -108,11 +108,5 @@ export class CadastroAvaliacaoComponent implements OnInit {
 
   onCancel(): void {
     this.router.navigate(['/']);
-  }
-
-
-
-  private generateUniqueId(): string {
-    return Math.random().toString(36).substr(2, 9);
   }
 }
