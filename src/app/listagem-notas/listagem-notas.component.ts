@@ -29,7 +29,11 @@ export class ListagemNotasComponent {
 
   buscarNotasAluno(id: number) {
     return this.alunoService.getNotasAluno(id).subscribe(response => {
-      this.avaliacoes = response;
+      this.avaliacoes = response.sort((a: any, b: any) => new Date(a.data).getTime() - new Date(b.data).getTime());
+
+      for (let avalacao of this.avaliacoes) {
+        avalacao.data = this.formataData(avalacao.data);
+      }
     });
   }
 

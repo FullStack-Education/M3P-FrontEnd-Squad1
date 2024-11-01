@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { AlunoService } from '../services/aluno.service';
 
 @Component({
   selector: 'app-home-aluno',
@@ -12,29 +13,31 @@ import { Router, RouterModule } from '@angular/router';
 export class HomeAlunoComponent implements OnInit {
 
 
-  
+  aluno: any;
   avaliacoes: any[] = []; 
   materias: string[] = [];
+  
   cursosExtras: string[] = ['Artesanato', 'Informática', 'Artes Cênicas']; 
 
   constructor(
-    private router: Router,
+    private router: Router, private alunoService: AlunoService
   ) {}
 
   ngOnInit() {
-    this.avaliacoes = [
-      { nome: 'Prova de Matemática', materia: 'Matemática', data: '2024-08-15' },
-      { nome: 'Redação', materia: 'Português', data: '2024-08-20' },
-      { nome: 'Exame de Física', materia: 'Física', data: '2024-08-25' },
-      { nome: 'Redação II', materia: 'Português', data: '2024-10-20' },
-      { nome: 'Trabalho de Química', materia: 'Química', data: '2024-05-22' }
-    ];
+    this.buscaIdent();
+    this.buscarNotasAluno(this.aluno);
 
     this.materias = ['Matemática', 'Português', 'Física'];
+  }
 
-    this.avaliacoes = this.avaliacoes
-    .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
-    .slice(0, 3);
+  buscaIdent() {
+    this.aluno = sessionStorage.getItem('entityId');
+  }
+
+  buscarNotasAluno(id: number) {
+    return this.alunoService.getNotasAluno(id).subscribe(response => {
+      this.avaliacoes = response;
+    });
   }
 
   verMaisAvaliacao(avaliacao: any) {

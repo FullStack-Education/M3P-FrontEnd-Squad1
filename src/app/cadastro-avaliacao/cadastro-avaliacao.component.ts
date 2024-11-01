@@ -84,7 +84,7 @@ export class CadastroAvaliacaoComponent implements OnInit {
     if (this.avaliacaoForm.valid) {
       const newAvaliacao = { ...this.avaliacaoForm.value };
       this.cadastrarAvaliacao(newAvaliacao);
-      // this.router.navigate(['/home']);
+      this.router.navigate(['/home']);
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.');
     }
@@ -92,9 +92,7 @@ export class CadastroAvaliacaoComponent implements OnInit {
 
   cadastrarAvaliacao(avaliacao: any) {
     return this.avaliacaoService.cadastroAvaliacao(avaliacao).subscribe( response => {
-      console.log(response)
-
-      //alert('Cadastro realizado com sucesso!');
+      alert('Cadastro realizado com sucesso!');
     });
   }
 
