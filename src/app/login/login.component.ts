@@ -25,7 +25,8 @@ export class LoginComponent {
   token = {
     token: '',
     role: '',
-    nome: ''
+    nome: '',
+    entityId: ''
   };
 
   onSubmit() {
@@ -33,10 +34,11 @@ export class LoginComponent {
     this.loginService.login(email, password).subscribe(response =>  {
 
       this.token = { ...response };
-
+      
       sessionStorage.setItem('token', this.token.token);
       sessionStorage.setItem('role', this.token.role);
       sessionStorage.setItem('nome', this.token.nome);
+      sessionStorage.setItem('entityId', this.token.entityId);
 
       let role = response.role;
       this.router.navigate(['/home'], { state: { role } });

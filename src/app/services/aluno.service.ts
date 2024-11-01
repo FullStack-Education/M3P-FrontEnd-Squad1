@@ -43,6 +43,17 @@ export class AlunoService {
     return this.http.get<any>(url, { headers });
   }
 
+  getNotasAluno(id: any): Observable<any> {
+    let url = 'http://localhost:8080/alunos/' + `${id}` + '/notas';
+    let token = sessionStorage.getItem('token');
+
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
+
+    return this.http.get<any>(url, { headers });
+  }
+
 
   cadastrarUsuarioAluno(aluno: any): Observable<any> {
     let url = 'http://localhost:8080/cadastro';
