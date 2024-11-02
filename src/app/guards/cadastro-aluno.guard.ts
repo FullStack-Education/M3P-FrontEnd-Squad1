@@ -5,7 +5,7 @@ export const cadastroAlunoGuard: CanActivateFn = (route, state) => {
 
   const router = inject(Router);
   
-  if (JSON.parse(localStorage['currentUser']).role == 'ADMINISTRADOR') {
+  if (sessionStorage.getItem('role') == 'ADMIN') {
     return true;
   } else {
     router.navigate(['/']);

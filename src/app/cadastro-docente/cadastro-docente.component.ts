@@ -40,19 +40,14 @@ export class CadastroDocenteComponent implements OnInit {
       this.docente.nascimento = docenteRecebido.nascimento;
       this.docente.cpf = docenteRecebido.cpf;
       this.docente.rg = docenteRecebido.rg;
-      this.docente.expeditor = docenteRecebido.expeditor;
       this.docente.naturalidade = docenteRecebido.naturalidade;
       this.docente.estadoCivil = docenteRecebido.estadoCivil;
       this.docente.telefone = docenteRecebido.telefone;
       this.docente.email = docenteRecebido.email;
-      this.docente.senha = docenteRecebido.senha;
-      this.docente.endereco.cep = docenteRecebido.endereco.cep;
-      this.docente.endereco.cidade = docenteRecebido.endereco.cidade;
-      this.docente.endereco.logradouro = docenteRecebido.endereco.logradouro;
-      this.docente.endereco.numero = docenteRecebido.endereco.numero;
-      this.docente.endereco.complemento = docenteRecebido.endereco.complemento;
-      this.docente.endereco.bairro = docenteRecebido.endereco.bairro;
-      this.docente.endereco.referencia = docenteRecebido.endereco.referencia;
+      //this.docente.endereco.cep = docenteRecebido.endereco.cep;
+      this.docente.endereco.numero = docenteRecebido.numero;
+      this.docente.endereco.complemento = docenteRecebido.complemento;
+      this.docente.endereco.referencia = docenteRecebido.referencia;
       this.materias = docenteRecebido.materias;
     }
   }
@@ -92,7 +87,7 @@ export class CadastroDocenteComponent implements OnInit {
     this.docenteForm = this.fb.group({
       nome: [`${this.docente.nome}`, [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
       genero: [`${this.docente.genero}`, Validators.required],
-      dataNascimento: [`${this.docente.nascimento}`, Validators.required],
+      nascimento: [`${this.docente.nascimento}`, Validators.required],
       cpf: [`${this.docente.cpf}`, [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]],
       rg: [`${this.docente.rg}`, [Validators.required, Validators.maxLength(20)]],
       estadoCivil: [`${this.docente.estadoCivil}`, Validators.required],
@@ -100,22 +95,61 @@ export class CadastroDocenteComponent implements OnInit {
       email: [`${this.docente.email}`, [Validators.required, Validators.email]],
       senha: [`${this.docente.senha}`, [Validators.required, Validators.minLength(8)]],
       naturalidade: [`${this.docente.naturalidade}`, [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-      enderecoCep: [`${this.docente.endereco.cep}`, [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
+      cep: [`${this.docente.endereco.cep}`, [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
       cidade: [this.docente.endereco.cidade],
       estado: [''],
       logradouro: [this.docente.endereco.logradouro],
       numero: [this.docente.endereco.numero],
       complemento: [this.docente.endereco.complemento],
       bairro: [this.docente.endereco.bairro],
-      pontoReferencia: [this.docente.endereco.referencia],
+      referencia: [this.docente.endereco.referencia],
       materias: [`${this.docente.materias}`, Validators.required]
     });
 
     this.buscarEndereco();
   }
 
+  onSubmit(): void {
+    if (this.docenteForm.valid) {
+      const docente = this.docenteForm.value;
+      const docenteToSave = { ...docente }
+
+      this.cadastrarUsuarioDocente(docenteToSave);
+      
+      alert('Cadastro realizado com sucesso!');
+      this.router.navigate(['/listagem-docentes']);
+
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+    }
+  }
+
+  private cadastrarUsuarioDocente(docente: any) {
+    this.docenteService.cadastrarUsuarioDocente(docente).subscribe( usuario => {
+      this.cadastrarDocente(docente, usuario)
+    })
+  }
+
+  private cadastrarDocente(docente: any, usuario: any) {
+    let data = { ...docente, usuario_id: usuario.usuarioId }
+    this.docenteService.cadastroDocente(data).subscribe(response => {
+    });
+  }
+
+  onEdit(): void {
+    alert('Editar funcionalidade não implementada.');
+  }
+
+  onDelete(): void {
+    alert('Deletar funcionalidade não implementada.');
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/home']);
+  }
+
   buscarEndereco(): void {
-    const cep = this.docenteForm.get('enderecoCep')?.value;
+    const cep = this.docenteForm.get('cep')?.value;
     if (cep) {
       this.viaCepService.buscarEndereco(cep).subscribe(
         endereco => {
@@ -132,41 +166,6 @@ export class CadastroDocenteComponent implements OnInit {
         }
       );
     }
-  }
-
-  onSubmit(): void {
-    if (this.docenteForm.valid) {
-      const docente = this.docenteForm.value;
-      const docenteToSave = {
-        ...docente, role: "DOCENTE", id: this.generateUniqueId()
-      }
-      docenteToSave.id = this.generateUniqueId();
-
-      const docentes = JSON.parse(localStorage.getItem('docentes') || '[]');
-      docentes.push(docenteToSave);
-      localStorage.setItem('docentes', JSON.stringify(docentes));
-
-      alert('Cadastro realizado com sucesso!');
-      this.router.navigate(['/listagem-docentes']);
-    } else {
-      alert('Por favor, preencha todos os campos obrigatórios.');
-    }
-  }
-
-  onEdit(): void {
-    alert('Editar funcionalidade não implementada.');
-  }
-
-  onDelete(): void {
-    alert('Deletar funcionalidade não implementada.');
-  }
-
-  onCancel(): void {
-    this.router.navigate(['/home']);
-  }
-
-  private generateUniqueId(): string {
-    return Math.random().toString(36).substr(2, 9);
   }
 
 }

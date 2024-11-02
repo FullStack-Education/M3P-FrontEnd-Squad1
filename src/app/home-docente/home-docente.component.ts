@@ -18,12 +18,19 @@ export class DocenteHomeComponent implements OnInit {
     private alunoService: AlunoService
   ) {}
 
-  alunos = this.alunoService.getMock();
+  alunos: any[] = [];
   filteredAlunos: any[] = [];
   searchQuery: string = '';
 
   ngOnInit() {
-    this.filteredAlunos = [...this.alunos];
+    this.buscarAlunos();
+  }
+
+  buscarAlunos() {
+    return this.alunoService.getAlunos().subscribe(response => {
+      this.alunos = response;
+      this.filteredAlunos = [...this.alunos];
+    });
   }
 
   onSearch(searchQuery: string) {

@@ -5,19 +5,19 @@
     <li class="nav-item">
       <button class="nav-link" routerLink="/home">Início</button>
     </li>
-    <li *ngIf="userRole === 'ADMINISTRADOR'" class="nav-item">
+    <li *ngIf="userRole === 'ADMIN'" class="nav-item">
       <a class="nav-link" routerLink="/cadastro-docente">Cadastro Docente</a>
     </li>
-    <li *ngIf="userRole === 'ADMINISTRADOR'" class="nav-item">
+    <li *ngIf="userRole === 'ADMIN'" class="nav-item">
       <a class="nav-link" routerLink="/cadastro-aluno">Cadastro de Aluno</a>
     </li>
-    <li *ngIf="userRole === 'ADMINISTRADOR' || userRole === 'DOCENTE'" class="nav-item">
+    <li *ngIf="userRole === 'ADMIN' || userRole === 'PROFESSOR'" class="nav-item">
       <a class="nav-link" routerLink="/cadastro-turma">Cadastro de Turma</a>
     </li>
-    <li *ngIf="userRole === 'ADMINISTRADOR' || userRole === 'DOCENTE'" class="nav-item">
+    <li *ngIf="userRole === 'ADMIN' || userRole === 'PROFESSOR'" class="nav-item">
       <a class="nav-link" routerLink="/cadastro-avaliacao">Cadastro de Avaliação</a>
     </li>
-    <li *ngIf="userRole === 'ADMINISTRADOR'" class="nav-item">
+    <li *ngIf="userRole === 'ADMIN'" class="nav-item">
       <a class="nav-link" routerLink="/listagem-docentes">Listagem de Docentes</a>
     </li>
     <li *ngIf="userRole === 'ALUNO'" class="nav-item">

@@ -24,9 +24,9 @@
         </div>
 
         <div class="mb-3">
-          <label for="dataNascimento" class="form-label">Data de Nascimento:</label>
-          <input id="dataNascimento" formControlName="dataNascimento" type="date" class="form-control" />
-          <div *ngIf="docenteForm.get('dataNascimento')?.invalid && docenteForm.get('dataNascimento')?.touched" class="text-danger">
+          <label for="nascimento" class="form-label">Data de Nascimento:</label>
+          <input id="nascimento" formControlName="nascimento" type="date" class="form-control" />
+          <div *ngIf="docenteForm.get('nascimento')?.invalid && docenteForm.get('nascimento')?.touched" class="text-danger">
             Data de Nascimento é obrigatória e deve ser válida.
           </div>
         </div>
@@ -90,9 +90,9 @@
         </div>
 
         <div class="mb-3">
-          <label for="enderecoCep" class="form-label">CEP:</label>
-          <input id="enderecoCep" formControlName="enderecoCep" type="text" class="form-control" (blur)="buscarEndereco()" />
-          <div *ngIf="docenteForm.get('enderecoCep')?.invalid && docenteForm.get('enderecoCep')?.touched" class="text-danger">
+          <label for="cep" class="form-label">CEP:</label>
+          <input id="cep" formControlName="cep" type="text" class="form-control" (blur)="buscarEndereco()" />
+          <div *ngIf="docenteForm.get('cep')?.invalid && docenteForm.get('cep')?.touched" class="text-danger">
             CEP é obrigatório e deve seguir o formato 00000-000.
           </div>
         </div>
@@ -128,8 +128,8 @@
         </div>
 
         <div class="mb-3">
-          <label for="pontoReferencia" class="form-label">Ponto de Referência:</label>
-          <input id="pontoReferencia" formControlName="pontoReferencia" type="text" class="form-control" />
+          <label for="referencia" class="form-label">Ponto de Referência:</label>
+          <input id="referencia" formControlName="referencia" type="text" class="form-control" />
         </div>
 
         <div class="mb-3">

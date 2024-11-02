@@ -5,6 +5,7 @@ import { CommonModule, formatDate } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocenteService } from '../services/docente.service';
 import { AlunoService } from '../services/aluno.service';
+import { AvaliacaoService } from '../services/avaliacao.service';
 
 @Component({
   selector: 'app-cadastro-avaliacao',
@@ -21,55 +22,78 @@ export class CadastroAvaliacaoComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private alunoService: AlunoService,
-    private docenteService: DocenteService
-  ) {
-
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    if (currentUser.role == 'DOCENTE') {
-      this.docentes = this.docenteService.getDocenteLogado(currentUser.name);
-    } else {
-      this.docentes = this.docenteService.getMock();
-    }
-  }
+    private docenteService: DocenteService,
+    private avaliacaoService: AvaliacaoService
+  ) {  }
   
-  turmas = ['Turma A', 'Turma B', 'Turma C', 'Turma D'];
-  materias = ['Matemática', 'Física', 'Química', 'História'];
-
-  alunos = this.alunoService.getMock();
+  alunos: any[] = [];
   docentes: any[] = [];
+  turmas: any[] =[];
+  materias: any[] =[];
+
 
   ngOnInit(): void {
-    this.initForm();    
+    this.initForm();
+    
+    this.buscarAlunos();
+    this.buscaTurmas();
+    this.buscaDocentes();
+    this.buscaMaterias();
+  }
+
+  buscarAlunos() {
+    return this.alunoService.getAlunos().subscribe(response => {
+      this.alunos = response;
+    });
+  }
+
+  buscaTurmas() {
+    return this.alunoService.getTurmas().subscribe(response => {
+      this.turmas = response;
+    });
+  }
+
+  buscaDocentes() {
+    return this.docenteService.getDocentes().subscribe(response => {
+      this.docentes = response;
+    });
+  }
+
+  buscaMaterias() {
+    return this.alunoService.getMaterias().subscribe(response => {
+      this.materias = response;
+    });
   }
 
   initForm(): void {
     this.avaliacaoForm = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(64)]],
-      dataInicio: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
+      nomeAvaliacao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(64)]],
+      dataNota: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
       dataTermino: [formatDate(new Date(), 'yyyy-MM-dd', 'en-US'), [Validators.required]],
       horario: [formatDate(new Date(), 'HH:mm', 'en-US'), [Validators.required]],
-      docente: ['', [Validators.required]],
-      materia: ['', [Validators.required]],
-      turma: ['', [Validators.required]],
-      aluno: ['', [Validators.required]],
-      nota: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
+      docente_id: ['', [Validators.required]],
+      materia_id: ['', [Validators.required]],
+      turma_id: ['', [Validators.required]],
+      aluno_id: ['', [Validators.required]],
+      valor: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
     });
   }
 
 
   onSubmit(): void {
     if (this.avaliacaoForm.valid) {
-      const newAvaliacao = { ...this.avaliacaoForm.value, id: this.generateUniqueId() };
-
-      const avaliacoes = JSON.parse(localStorage.getItem('avaliacoes') || '[]');
-      avaliacoes.push(newAvaliacao);
-      localStorage.setItem('avaliacoes', JSON.stringify(avaliacoes));
-
-      alert('Avaliação cadastrada com sucesso!');
+      const newAvaliacao = { ...this.avaliacaoForm.value };
+      this.cadastrarAvaliacao(newAvaliacao);
       this.router.navigate(['/home']);
     } else {
       alert('Por favor, preencha todos os campos obrigatórios.');
     }
+  }
+
+  cadastrarAvaliacao(avaliacao: any) {
+    return this.avaliacaoService.cadastroAvaliacao(avaliacao).subscribe( response => {
+      alert('Cadastro realizado com sucesso!');
+    });
   }
 
   onEdit(): void {
@@ -82,11 +106,5 @@ export class CadastroAvaliacaoComponent implements OnInit {
 
   onCancel(): void {
     this.router.navigate(['/']);
-  }
-
-
-
-  private generateUniqueId(): string {
-    return Math.random().toString(36).substr(2, 9);
   }
 }

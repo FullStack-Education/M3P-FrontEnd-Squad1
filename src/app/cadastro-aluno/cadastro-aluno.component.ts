@@ -20,9 +20,10 @@ export class CadastroAlunoComponent implements OnInit {
 
   generos = ['Masculino', 'Feminino', 'Outro'];
   estadosCivis = ['Solteiro(a)', 'Casado(a)', 'União Estável', 'Divorciado(a)', 'Viúvo(a)'];
-  turmas = ['Turma A', 'Turma B', 'Turma C'];
 
+  turmas: any[] = [];
   isEditing = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -46,14 +47,9 @@ export class CadastroAlunoComponent implements OnInit {
       this.aluno.telefone = alunoRecebido.telefone;
       this.aluno.email = alunoRecebido.email;
       this.aluno.senha = alunoRecebido.senha;
-      this.aluno.endereco.cep = alunoRecebido.endereco.cep;
-      this.aluno.endereco.cidade = alunoRecebido.endereco.cidade;
-      this.aluno.endereco.logradouro = alunoRecebido.endereco.logradouro;
-      this.aluno.endereco.numero = alunoRecebido.endereco.numero;
-      this.aluno.endereco.complemento = alunoRecebido.endereco.complemento;
-      this.aluno.endereco.bairro = alunoRecebido.endereco.bairro;
-      this.aluno.endereco.referencia = alunoRecebido.endereco.referencia;
-      this.turmas = alunoRecebido.turma;
+      //this.aluno.endereco.cep = alunoRecebido.cep;
+      this.aluno.endereco.numero = alunoRecebido.numero;
+
     }
   }
 
@@ -88,6 +84,13 @@ export class CadastroAlunoComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.buscaTurmas();
+  }
+
+  buscaTurmas() {
+    return this.alunoService.getTurmas().subscribe(response => {
+      this.turmas = response;
+    });
   }
 
   initForm(): void {
@@ -102,24 +105,60 @@ export class CadastroAlunoComponent implements OnInit {
       email: [`${this.aluno.email}`, [Validators.required, Validators.email]],
       senha: [`${this.aluno.senha}`, [Validators.required, Validators.minLength(8)]],
       naturalidade: [`${this.aluno.naturalidade}`, [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
-      enderecoCep: [`${this.aluno.endereco.cep}`, [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
+      cep: [`${this.aluno.endereco.cep}`, [Validators.required, Validators.pattern(/^\d{5}-\d{3}$/)]],
       cidade: [`${this.aluno.endereco.cidade}`],
       estado: [''],
       logradouro: [`${this.aluno.endereco.logradouro}`],
       numero: [`${this.aluno.endereco.numero}`],
       complemento: [`${this.aluno.endereco.complemento}`],
       bairro: [`${this.aluno.endereco.bairro}`],
-      pontoReferencia: [`${this.aluno.endereco.referencia}`],
-      turmas: [`${this.aluno.turma}`, Validators.required]
+      referencia: [`${this.aluno.endereco.referencia}`],
+      turma_id: [`${this.aluno.turma}`, Validators.required]
     });
 
     this.buscarEndereco();
   }
 
+  onSubmit(): void {
+    if (this.alunoForm.valid) {
+      const aluno = this.alunoForm.value;
+      const alunoToSave = { ...aluno }
 
+      this.cadastrarUsuarioAluno(alunoToSave);
+
+      alert('Cadastro realizado com sucesso!');
+      this.router.navigate(['/home']);
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+    }
+  }
+
+  private cadastrarUsuarioAluno(aluno: any) {
+    this.alunoService.cadastrarUsuarioAluno(aluno).subscribe( usuario => {
+      this.cadastrarAluno(aluno, usuario)
+    })
+  }
+
+  private cadastrarAluno(aluno: any, usuario: any) {
+    let data = { ...aluno, usuario_id: usuario.usuarioId }
+    this.alunoService.cadastrarAluno(data).subscribe(response => {
+    });
+  }
+
+  onEdit(): void {
+    alert('Editar funcionalidade não implementada.');
+  }
+
+  onDelete(): void {
+    alert('Deletar funcionalidade não implementada.');
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/home']);
+  }
 
   buscarEndereco(): void {
-    const cep = this.alunoForm.get('enderecoCep')?.value;
+    const cep = this.alunoForm.get('cep')?.value;
     if (cep) {
       this.viaCepService.buscarEndereco(cep).subscribe(
         endereco => {
@@ -137,40 +176,4 @@ export class CadastroAlunoComponent implements OnInit {
       );
     }
   }
-
-  onSubmit(): void {
-    if (this.alunoForm.valid) {
-      const aluno = this.alunoForm.value;
-      const alunoToSave = {
-        ...aluno, role: "ALUNO", id: this.generateUniqueId()
-      }
-      alunoToSave.id = this.generateUniqueId();
-
-      const alunos = JSON.parse(localStorage.getItem('alunos') || '[]');
-      alunos.push(alunoToSave);
-      localStorage.setItem('alunos', JSON.stringify(alunos));
-
-      alert('Cadastro realizado com sucesso!');
-      this.router.navigate(['/home']);
-    } else {
-      alert('Por favor, preencha todos os campos obrigatórios.');
-    }
-  }
-
-  onEdit(): void {
-    alert('Editar funcionalidade não implementada.');
-  }
-
-  onDelete(): void {
-    alert('Deletar funcionalidade não implementada.');
-  }
-
-  onCancel(): void {
-    this.router.navigate(['/home']);
-  }
-
-  private generateUniqueId(): string {
-    return Math.random().toString(36).substr(2, 9);
-  }
-
 }

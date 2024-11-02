@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AlunoService } from '../services/aluno.service';
 import { FormsModule } from '@angular/forms';
+import { DocenteService } from '../services/docente.service';
 
 @Component({
   selector: 'app-home-admin',
@@ -12,27 +13,55 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./home-admin.component.css']
 })
 export class HomeAdminComponent implements OnInit {
+
+  
   alunosCadastrados: number = 0;
   docentesCadastrados: number = 0;
   turmasCadastradas: number = 0;
 
-  alunos = this.alunoService.getMock();
+  turmas: any[] = []
+  alunos: any[] = [];
+  docentes: any[] = [];
+
+
   filteredAlunos: any[] = [];
 
   searchQuery: any;
 
   constructor(
     private router: Router,
-    private alunoService: AlunoService
+    private alunoService: AlunoService,
+    private docenteService: DocenteService
   ) {}
 
   ngOnInit() {
-    this.alunosCadastrados = this.alunoService.getMock().length;
-    this.docentesCadastrados = 25;
-    this.turmasCadastradas = 8;
-
-    this.filteredAlunos = [...this.alunos];
+    this.buscarAlunos();
+    this.buscaTurmas();
+    this.buscaDocentes();
   }
+
+  buscarAlunos() {
+    return this.alunoService.getAlunos().subscribe(response => {
+      this.alunos = response;
+      this.alunosCadastrados = this.alunos.length;
+      this.filteredAlunos = [...this.alunos];
+    });
+  }
+
+  buscaTurmas() {
+    return this.alunoService.getTurmas().subscribe(response => {
+      this.turmas = response;
+      this.turmasCadastradas = this.turmas.length;
+    });
+  }
+
+  buscaDocentes() {
+    return this.docenteService.getDocentes().subscribe(response => {
+      this.docentes = response;
+      this.docentesCadastrados = this.docentes.length;
+    });
+  }
+
 
   onSearch(searchQuery: string) {
     if (searchQuery) {

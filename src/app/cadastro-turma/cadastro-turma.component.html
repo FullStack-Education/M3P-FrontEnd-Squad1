@@ -37,22 +37,32 @@
         </div>
 
         <div class="mb-3">
-          <label for="docente" class="form-label">Docente:</label>
-          <select id="docente" formControlName="docente" class="form-select">
-            <option *ngFor="let docente of docentes" [value]="docente">{{ docente.nome }}</option>
+          <label for="docente_id" class="form-label">Docente:</label>
+          <select id="docente_id" formControlName="docente_id" class="form-select">
+            <option *ngFor="let docente of docentes" [value]="docente.id">{{ docente.nome }}</option>
           </select>
-          <div *ngIf="turmaForm.get('docente')?.invalid && turmaForm.get('docente')?.touched" class="text-danger">
+          <div *ngIf="turmaForm.get('docente_id')?.invalid && turmaForm.get('docente_id')?.touched" class="text-danger">
             Docente é obrigatório.
           </div>
         </div>
 
         <div class="mb-3">
-          <label for="materia" class="form-label">Matéria:</label>
-          <select id="materia" formControlName="materia" class="form-select">
-            <option *ngFor="let materia of materias" [value]="materia">{{ materia }}</option>
+          <label for="materia_id" class="form-label">Matéria:</label>
+          <select id="materia_id" formControlName="materia_id" class="form-select">
+            <option *ngFor="let materia of materias" [value]="materia.id">{{ materia.nome }}</option>
           </select>
-          <div *ngIf="turmaForm.get('materia')?.invalid && turmaForm.get('materia')?.touched" class="text-danger">
+          <div *ngIf="turmaForm.get('materia_id')?.invalid && turmaForm.get('materia_id')?.touched" class="text-danger">
             Matéria é obrigatória.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="curso_id" class="form-label">Curso:</label>
+          <select id="curso_id" formControlName="curso_id" class="form-select">
+            <option *ngFor="let curso of cursos" [value]="curso.id">{{ curso.nome }}</option>
+          </select>
+          <div *ngIf="turmaForm.get('curso_id')?.invalid && turmaForm.get('curso_id')?.touched" class="text-danger">
+            Curso é obrigatório.
           </div>
         </div>
 

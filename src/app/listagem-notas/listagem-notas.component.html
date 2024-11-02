@@ -15,11 +15,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let avaliacao of avaliacoes">
-            <td>{{ avaliacao.turma }}</td>
-            <td>{{ avaliacao.docente }}</td>
-            <td>{{ avaliacao.materia }}</td>
+            <td>{{ avaliacao.turma.nome }}</td>
+            <td>{{ avaliacao.docente.nome }}</td>
+            <td>{{ avaliacao.materia.nome }}</td>
             <td>{{ avaliacao.nomeAvaliacao }}</td>
-            <td>{{ avaliacao.nota }}</td>
+            <td>{{ avaliacao.valor }}</td>
             <td>{{ avaliacao.data }}</td>
           </tr>
         </tbody>

@@ -13,15 +13,23 @@ import { DocenteService } from '../services/docente.service';
 })
 export class ListagemDocentesComponent implements OnInit {
 
-  constructor(private router: Router) {}
-  docenteService = inject(DocenteService);
+  constructor(private router: Router,
+    private docenteService: DocenteService) {}
 
-  docentes = this.docenteService.getMock();
   searchQuery: string = '';
   filteredDocentes: any[] = [];
+  docentes: any[] = []
+
 
   ngOnInit(): void {
-    this.filteredDocentes = [...this.docentes];
+    this.carregarDocentes();
+  }
+
+  carregarDocentes() {
+    return this.docenteService.getDocentes().subscribe(response => {
+      this.docentes = response;
+      this.filteredDocentes = [...this.docentes];
+    });
   }
 
   onSearch(searchQuery: string) {

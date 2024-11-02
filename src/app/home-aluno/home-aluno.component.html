@@ -6,7 +6,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ avaliacao.nome }}</h5>
-            <p class="card-text">Matéria: {{ avaliacao.materia }}</p>
+            <p class="card-text">Matéria: {{ avaliacao.materia.nome }}</p>
             <p class="card-text">Data: {{ avaliacao.data }}</p>
             <button class="btn btn-primary" (click)="verMaisAvaliacao(avaliacao)">
               Ver Mais
