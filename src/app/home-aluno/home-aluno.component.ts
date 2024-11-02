@@ -14,6 +14,7 @@ export class HomeAlunoComponent implements OnInit {
 
 
   aluno: any;
+
   avaliacoes: any[] = []; 
   materias: string[] = [];
   
@@ -36,8 +37,23 @@ export class HomeAlunoComponent implements OnInit {
 
   buscarNotasAluno(id: number) {
     return this.alunoService.getNotasAluno(id).subscribe(response => {
-      this.avaliacoes = response;
+      this.avaliacoes = response
+      .sort((a: any, b: any) => new Date(a.data).getTime() - new Date(b.data).getTime())
+      .reverse()
+      .slice(0, 3);
+
+      for (let avalacao of this.avaliacoes) {
+        avalacao.data = this.formataData(avalacao.data);
+      }
     });
+  }
+
+  formataData(data: string) {
+    let arrayData = data.split('-')
+    let dia = arrayData[2];
+    let mes = arrayData[1];
+    let ano = arrayData[0];
+    return dia + '/' + mes + '/' + ano
   }
 
   verMaisAvaliacao(avaliacao: any) {
