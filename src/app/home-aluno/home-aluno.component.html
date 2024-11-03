@@ -32,6 +32,21 @@
     </ul>
   </div>
 
+  <h1>Cursos Matriculados</h1>
+  <div class="row mb-4" *ngIf="cursos.length > 0; else noCursos">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let curso of cursos">
+        {{ curso }}
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noCursos>
+    <div class="alert alert-info" role="alert">
+      Você não tem nenhum curso.
+    </div>
+  </ng-template>
+
   <h1>Cursos Extras</h1>
   <div class="row mb-4">
     <ul class="list-group">

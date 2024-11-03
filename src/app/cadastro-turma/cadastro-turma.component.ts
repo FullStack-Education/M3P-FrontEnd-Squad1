@@ -45,7 +45,18 @@ export class CadastroTurmaComponent implements OnInit {
 
   buscaDocentes() {
     return this.docenteService.getDocentes().subscribe(response => {
-      this.docentes = response;
+      let role = sessionStorage.getItem('role');
+      let nome = sessionStorage.getItem('nome');
+      
+      if (role == 'PROFESSOR') {
+        for (let docente of response) {
+          if (docente.nome == nome) {
+            this.docentes.push(docente);
+            break;
+          }
+        }
+      } else { this.docentes = response; }
+
     });
   }
 

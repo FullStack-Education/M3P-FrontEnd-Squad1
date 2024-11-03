@@ -6,7 +6,6 @@ import { catchError, Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class DocenteService {
-  private readonly STORAGE_KEY = 'docentes';
 
   constructor(private http:HttpClient) { }
   

@@ -6,7 +6,6 @@ import { catchError, Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class AlunoService {
-  private readonly STORAGE_KEY = 'alunos';
 
   constructor(private http:HttpClient) { }
   
@@ -54,6 +53,16 @@ export class AlunoService {
     return this.http.get<any>(url, { headers });
   }
 
+  getCursos(): Observable<any> {
+    let url = 'http://localhost:8080/cursos';
+    let token = sessionStorage.getItem('token');
+
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
+
+    return this.http.get<any>(url, { headers });
+  }
 
   cadastrarUsuarioAluno(aluno: any): Observable<any> {
     let url = 'http://localhost:8080/cadastro';

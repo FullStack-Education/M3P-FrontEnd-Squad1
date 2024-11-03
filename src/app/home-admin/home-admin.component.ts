@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AlunoService } from '../services/aluno.service';
 import { FormsModule } from '@angular/forms';
-import { DocenteService } from '../services/docente.service';
+import { AdminService } from '../services/admin.service';
 
 @Component({
   selector: 'app-home-admin',
@@ -15,15 +15,11 @@ import { DocenteService } from '../services/docente.service';
 export class HomeAdminComponent implements OnInit {
 
   
-  alunosCadastrados: number = 0;
-  docentesCadastrados: number = 0;
-  turmasCadastradas: number = 0;
+  alunosCadastrados: any;
+  docentesCadastrados: any;
+  turmasCadastradas: any;
 
-  turmas: any[] = []
   alunos: any[] = [];
-  docentes: any[] = [];
-
-
   filteredAlunos: any[] = [];
 
   searchQuery: any;
@@ -31,37 +27,29 @@ export class HomeAdminComponent implements OnInit {
   constructor(
     private router: Router,
     private alunoService: AlunoService,
-    private docenteService: DocenteService
+    private adminService: AdminService
   ) {}
 
   ngOnInit() {
     this.buscarAlunos();
-    this.buscaTurmas();
-    this.buscaDocentes();
+    this.buscarEstatisticas();
+
   }
 
   buscarAlunos() {
     return this.alunoService.getAlunos().subscribe(response => {
       this.alunos = response;
-      this.alunosCadastrados = this.alunos.length;
       this.filteredAlunos = [...this.alunos];
     });
   }
 
-  buscaTurmas() {
-    return this.alunoService.getTurmas().subscribe(response => {
-      this.turmas = response;
-      this.turmasCadastradas = this.turmas.length;
+  buscarEstatisticas() {
+    this.adminService.getEstatisticas().subscribe( response => {
+      this.alunosCadastrados = response.alunos;
+      this.docentesCadastrados = response.docentes;
+      this.turmasCadastradas = response.turmas;
     });
   }
-
-  buscaDocentes() {
-    return this.docenteService.getDocentes().subscribe(response => {
-      this.docentes = response;
-      this.docentesCadastrados = this.docentes.length;
-    });
-  }
-
 
   onSearch(searchQuery: string) {
     if (searchQuery) {

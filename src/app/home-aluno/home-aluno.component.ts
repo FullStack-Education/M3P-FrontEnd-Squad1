@@ -17,8 +17,9 @@ export class HomeAlunoComponent implements OnInit {
 
   avaliacoes: any[] = []; 
   materias: string[] = [];
-  
-  cursosExtras: string[] = ['Artesanato', 'Informática', 'Artes Cênicas']; 
+
+  cursos: any[] = [];
+  cursosExtras = new Set();
 
   constructor(
     private router: Router, private alunoService: AlunoService
@@ -27,12 +28,6 @@ export class HomeAlunoComponent implements OnInit {
   ngOnInit() {
     this.buscaIdent();
     this.buscarNotasAluno(this.aluno);
-
-    this.materias = ['Matemática', 'Português', 'Física'];
-  }
-
-  buscaIdent() {
-    this.aluno = sessionStorage.getItem('entityId');
   }
 
   buscarNotasAluno(id: number) {
@@ -42,10 +37,35 @@ export class HomeAlunoComponent implements OnInit {
       .reverse()
       .slice(0, 3);
 
+      let materias: any[] = [];
+
       for (let avalacao of this.avaliacoes) {
         avalacao.data = this.formataData(avalacao.data);
+        materias.push(avalacao.materia.nome);
       }
+
+      this.materias = Array.from(new Set(materias));
+
+      this.defineCursos();
     });
+  }
+
+  defineCursos() {
+    let cursosMatriculados = new Set();
+    for (let avaliacao of this.avaliacoes) {
+      cursosMatriculados.add(avaliacao.aluno.turma.curso.nome);
+    }
+
+    cursosMatriculados.forEach(x => this.cursos.push(x));
+
+    let cursosExtras = new Set();
+    this.alunoService.getCursos().subscribe(response => {
+      for (let curso of response) {
+        cursosExtras.add(curso.nome)
+      }
+
+      this.lancaExtras(cursosExtras, cursosMatriculados);
+    });   
   }
 
   formataData(data: string) {
@@ -58,5 +78,14 @@ export class HomeAlunoComponent implements OnInit {
 
   verMaisAvaliacao(avaliacao: any) {
     this.router.navigate(['/listagem-notas']);
+  }
+
+  buscaIdent() {
+    this.aluno = sessionStorage.getItem('entityId');
+  }
+
+  lancaExtras(setA: Set<any>, setB: Set<any>) {
+    let extras = new Set([...setA].filter(x => !setB.has(x)));
+    this.cursosExtras = extras;
   }
 }

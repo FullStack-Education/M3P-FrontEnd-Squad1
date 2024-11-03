@@ -55,6 +55,7 @@ export class SidebarComponent implements OnInit {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('role');
     sessionStorage.removeItem('nome');
+    sessionStorage.removeItem('entityId');
 
     this.router.navigate(['/']);
   }
