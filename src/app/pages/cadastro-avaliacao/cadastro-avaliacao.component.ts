@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule, formatDate } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DocenteService } from '../services/docente.service';
-import { AlunoService } from '../services/aluno.service';
-import { AvaliacaoService } from '../services/avaliacao.service';
+import { DocenteService } from '../../shared/services/docente.service';
+import { AlunoService } from '../../shared/services/aluno.service';
+import { AvaliacaoService } from '../../shared/services/avaliacao.service';
 
 @Component({
   selector: 'app-cadastro-avaliacao',

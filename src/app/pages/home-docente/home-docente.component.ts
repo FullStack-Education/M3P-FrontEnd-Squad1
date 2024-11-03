@@ -1,53 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { AlunoService } from '../services/aluno.service';
+import { AlunoService } from '../../shared/services/aluno.service';
 import { FormsModule } from '@angular/forms';
-import { AdminService } from '../services/admin.service';
 
 @Component({
-  selector: 'app-home-admin',
+  selector: 'app-home-docente',
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: './home-admin.component.html',
-  styleUrls: ['./home-admin.component.css']
+  templateUrl: './home-docente.component.html',
+  styleUrls: ['./home-docente.component.css']
 })
-export class HomeAdminComponent implements OnInit {
-
-  
-  alunosCadastrados: any;
-  docentesCadastrados: any;
-  turmasCadastradas: any;
-
-  alunos: any[] = [];
-  filteredAlunos: any[] = [];
-
-  searchQuery: any;
+export class DocenteHomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private alunoService: AlunoService,
-    private adminService: AdminService
+    private alunoService: AlunoService
   ) {}
+
+  alunos: any[] = [];
+  filteredAlunos: any[] = [];
+  searchQuery: string = '';
 
   ngOnInit() {
     this.buscarAlunos();
-    this.buscarEstatisticas();
-
   }
 
   buscarAlunos() {
     return this.alunoService.getAlunos().subscribe(response => {
       this.alunos = response;
       this.filteredAlunos = [...this.alunos];
-    });
-  }
-
-  buscarEstatisticas() {
-    this.adminService.getEstatisticas().subscribe( response => {
-      this.alunosCadastrados = response.alunos;
-      this.docentesCadastrados = response.docentes;
-      this.turmasCadastradas = response.turmas;
     });
   }
 
@@ -63,7 +45,7 @@ export class HomeAdminComponent implements OnInit {
     }
   }
 
-  verMaisAluno(aluno: any) {
-    this.router.navigate(['/cadastro-aluno'], { state: { aluno } });
+  lancarNota(aluno: any) {
+    this.router.navigate(['/cadastro-avaliacao'], { state: { aluno } });
   }
 }

@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HomeAdminComponent } from "../home-admin/home-admin.component";
 import { DocenteHomeComponent } from "../home-docente/home-docente.component";
 import { HomeAlunoComponent } from '../home-aluno/home-aluno.component';
-import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { ToolbarComponent } from '../../shared/toolbar/toolbar.component';
 
 @Component({
   selector: 'app-home',

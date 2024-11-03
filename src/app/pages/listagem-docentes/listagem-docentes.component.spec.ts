@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListagemDocentesComponent } from './listagem-docentes.component';
 import { Router } from '@angular/router';
-import { DocenteService } from '../services/docente.service';
+import { DocenteService } from '../../shared/services/docente.service';
 import { of } from 'rxjs';
 
 describe('ListagemDocentesComponent', () => {

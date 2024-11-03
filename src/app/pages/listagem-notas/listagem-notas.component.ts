@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AvaliacaoService } from '../services/avaliacao.service';
-import { AlunoService } from '../services/aluno.service';
+import { AvaliacaoService } from '../../shared/services/avaliacao.service';
+import { AlunoService } from '../../shared/services/aluno.service';
 
 @Component({
   selector: 'app-listagem-notas',

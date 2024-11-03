@@ -3,8 +3,8 @@ import { CadastroDocenteComponent } from './cadastro-docente.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
-import { ViaCepService } from '../services/via-cep.service';
-import { DocenteService } from '../services/docente.service';
+import { ViaCepService } from '../../shared/services/via-cep.service';
+import { DocenteService } from '../../shared/services/docente.service';
 import { of, throwError } from 'rxjs';
 
 describe('CadastroDocenteComponent', () => {

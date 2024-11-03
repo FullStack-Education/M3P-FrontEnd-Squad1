@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { AlunoService } from '../services/aluno.service';
+import { AlunoService } from '../../shared/services/aluno.service';
 
 @Component({
   selector: 'app-home-aluno',

@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule, formatDate } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DocenteService } from '../services/docente.service';
-import { AlunoService } from '../services/aluno.service';
+import { DocenteService } from '../../shared/services/docente.service';
+import { AlunoService } from '../../shared/services/aluno.service';
 
 @Component({
   selector: 'app-cadastro-turma',

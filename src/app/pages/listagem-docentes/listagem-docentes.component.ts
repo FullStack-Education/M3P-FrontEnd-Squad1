@@ -1,8 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { DocenteService } from '../services/docente.service';
+import { DocenteService } from '../../shared/services/docente.service';
 
 @Component({
   selector: 'app-listagem-docentes',

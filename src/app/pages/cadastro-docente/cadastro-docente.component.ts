@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ViaCepService } from '../services/via-cep.service';
-import { DocenteService } from '../services/docente.service';
+import { ViaCepService } from '../../shared/services/via-cep.service';
+import { DocenteService } from '../../shared/services/docente.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
