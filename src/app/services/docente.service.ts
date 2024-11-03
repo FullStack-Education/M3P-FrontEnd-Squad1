@@ -76,14 +76,14 @@ export class DocenteService {
     return this.http.post<any>(url, data, { headers });
   }
 
+  deletarDocente(id: number): Observable<any> {
+    let url = 'http://localhost:8080/docentes/' + `${id}`;
+    let token = sessionStorage.getItem('token');
 
-
-
-
-
-  deleteDocente(docenteId: number): void {
-    // const docentes = JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '[]');
-    // const updatedDocentes = docentes.filter((docente: any) => docente.id !== docenteId);
-    // localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updatedDocentes));
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
+    return this.http.delete(url, { headers });
   }
+
 }

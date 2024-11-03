@@ -20,6 +20,16 @@ export class AlunoService {
     return this.http.get<any>(url, { headers });
   }
 
+  deletarTurmas(id: number): Observable<any> {
+    let url = 'http://localhost:8080/turmas/' + `${id}`;
+    let token = sessionStorage.getItem('token');
+
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
+    return this.http.delete(url, { headers });
+  }
+
   getAlunos(): Observable<any> {
     let url = 'http://localhost:8080/alunos';
     let token = sessionStorage.getItem('token');
@@ -94,5 +104,28 @@ export class AlunoService {
     })
 
     return this.http.post<any>(url, data, { headers });
+  }
+
+  deletarAluno(id: number): Observable<any> {
+    let url = 'http://localhost:8080/alunos/' + `${id}`;
+    let token = sessionStorage.getItem('token');
+
+    let headers = new HttpHeaders({
+      'Authorization' : `${token}`
+    })
+    return this.http.delete(url, { headers }).pipe(catchError(this.handleErrorAluno));;
+  }
+
+  private handleErrorAluno(error: HttpErrorResponse) {
+    let errorMsg = 'Erro ao deletar Aluno.'
+
+    if (error.error instanceof ErrorEvent) {
+      errorMsg = `Error: ${error.error.message}`;
+    } else {
+      errorMsg = `Error else código: ${error.status}\nMessage: 'Aluno com notas cadastradas, impossível deletar..`
+    }
+
+    alert(errorMsg);
+    return throwError(() => new Error(errorMsg));
   }
 }

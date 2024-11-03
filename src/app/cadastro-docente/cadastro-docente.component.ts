@@ -23,6 +23,7 @@ export class CadastroDocenteComponent implements OnInit {
   materias = ['Matemática', 'Física', 'Química', 'História'];
 
   isEditing = false;
+  eventualDocenteId: any;
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +36,7 @@ export class CadastroDocenteComponent implements OnInit {
     if (docenteRecebido) {
       this.isEditing = true;
 
+      this.eventualDocenteId = docenteRecebido.id;
       this.docente.nome = docenteRecebido.nome;
       this.docente.genero = docenteRecebido.genero;
       this.docente.nascimento = docenteRecebido.nascimento;
@@ -141,7 +143,24 @@ export class CadastroDocenteComponent implements OnInit {
   }
 
   onDelete(): void {
-    alert('Deletar funcionalidade não implementada.');
+    if (this.docenteForm.valid) {
+      const docenteToDelete = this.eventualDocenteId;
+
+      this.deletarDocente(docenteToDelete);
+      
+      alert('Docente deletado com sucesso!');
+      this.router.navigate(['/listagem-docentes']);
+
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+    }
+  }
+
+  deletarDocente(id: number) {
+    console.log(id);
+    this.docenteService.deletarDocente(id).subscribe(response => {
+      console.log('Docente deletado!')
+    });
   }
 
   onCancel(): void {

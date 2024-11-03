@@ -23,6 +23,7 @@ export class CadastroAlunoComponent implements OnInit {
 
   turmas: any[] = [];
   isEditing = false;
+  eventualAlunoId: any;
 
 
   constructor(
@@ -36,6 +37,7 @@ export class CadastroAlunoComponent implements OnInit {
     if (alunoRecebido) {
       this.isEditing = true;
 
+      this.eventualAlunoId = alunoRecebido.id;
       this.aluno.nome = alunoRecebido.nome;
       this.aluno.genero = alunoRecebido.genero;
       this.aluno.nascimento = alunoRecebido.nascimento;
@@ -150,7 +152,22 @@ export class CadastroAlunoComponent implements OnInit {
   }
 
   onDelete(): void {
-    alert('Deletar funcionalidade não implementada.');
+    if (this.eventualAlunoId) {
+      const alunoDelete = this.eventualAlunoId;
+
+      this.deletaAluno(alunoDelete);
+      this.router.navigate(['/listagem-docentes']);
+
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+    }
+  }
+
+  deletaAluno(id: number) {
+    this.alunoService.deletarAluno(id).subscribe(response => {
+      console.log('Aluno deletado!')
+      alert('Aluno deletado com sucesso!');
+    });
   }
 
   onCancel(): void {

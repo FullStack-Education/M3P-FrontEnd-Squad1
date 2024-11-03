@@ -20,7 +20,7 @@ export class LoginService {
     return this.http.post<any>(url, body).pipe(catchError(this.handleError));
   }
 
-  handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse) {
     let errorMsg = 'Usuário com login ou senha errados.'
 
     if (error.error instanceof ErrorEvent) {
