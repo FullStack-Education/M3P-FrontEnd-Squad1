@@ -1,0 +1,52 @@
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #164270;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar-content {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toolbar-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar-title h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.toolbar-title .user-role {
+  font-size: 0.85rem;
+  font-weight: 400;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.toolbar-user-info {
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-user-info .user-name {
+  margin-right: 15px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.user-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid white;
+}

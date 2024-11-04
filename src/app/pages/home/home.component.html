@@ -1,0 +1,11 @@
+<div *ngIf="userRole === 'ADMIN'">
+  <app-home-admin></app-home-admin>
+</div>
+
+<div *ngIf="userRole === 'PROFESSOR'">
+  <app-home-docente></app-home-docente>
+</div>
+
+<div *ngIf="userRole === 'ALUNO'">
+  <app-home-aluno></app-home-aluno>
+</div>

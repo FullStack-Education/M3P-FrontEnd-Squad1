@@ -1,0 +1,33 @@
+<div class="container mt-5">
+    <h2 class="mb-4">Histórico de Avaliações e Notas</h2>
+  
+    <div *ngIf="avaliacoes.length > 0; else noData" class="table-responsive mt-4">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Turma</th>
+            <th>Docente</th>
+            <th>Matéria</th>
+            <th>Nome da Avaliação</th>
+            <th>Nota</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let avaliacao of avaliacoes">
+            <td>{{ avaliacao.turma.nome }}</td>
+            <td>{{ avaliacao.docente.nome }}</td>
+            <td>{{ avaliacao.materia.nome }}</td>
+            <td>{{ avaliacao.nomeAvaliacao }}</td>
+            <td>{{ avaliacao.valor }}</td>
+            <td>{{ avaliacao.data }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <ng-template #noData>
+      <p class="text-center mt-4">Nenhuma avaliação encontrada.</p>
+    </ng-template>
+  </div>
+  

@@ -1,0 +1,107 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <form [formGroup]="avaliacaoForm" (ngSubmit)="onSubmit()" class="p-4 border rounded bg-light shadow">
+        <h1>Cadastro de Avaliação</h1>
+
+
+        <div class="mb-3">
+          <label for="aluno_id" class="form-label">Aluno:</label>
+          <select id="aluno_id" formControlName="aluno_id" class="form-select">
+            <option *ngFor="let aluno of alunos" [value]="aluno.id">{{ aluno.nome }}</option>
+          </select>
+          <div *ngIf="avaliacaoForm.get('aluno_id')?.invalid && avaliacaoForm.get('aluno_id')?.touched" class="text-danger">
+            Aluno é obrigatório.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="turma_id" class="form-label">Turma:</label>
+          <select id="turma_id" formControlName="turma_id" class="form-select">
+            <option *ngFor="let turma of turmas" [value]="turma.id">{{ turma.nomeTurma }}</option>
+          </select>
+          <div *ngIf="avaliacaoForm.get('turma_id')?.invalid && avaliacaoForm.get('turma_id')?.touched" class="text-danger">
+            Turma é obrigatório.
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <label for="docente_id" class="form-label">Docente:</label>
+          <select id="docente_id" formControlName="docente_id" class="form-select">
+            <option *ngFor="let docente of docentes" [value]="docente.id">{{ docente.nome }}</option>
+          </select>
+          <div *ngIf="avaliacaoForm.get('docente_id')?.invalid && avaliacaoForm.get('docente_id')?.touched"
+            class="text-danger">
+            Docente é obrigatório.
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <label for="materia_id" class="form-label">Matéria:</label>
+          <select id="materia_id" formControlName="materia_id" class="form-select">
+            <option *ngFor="let materia of materias" [value]="materia.id">{{ materia.nome }}</option>
+          </select>
+          <div *ngIf="avaliacaoForm.get('materia_id')?.invalid && avaliacaoForm.get('materia_id')?.touched"
+            class="text-danger">
+            Matéria é obrigatória.
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <label for="nomeAvaliacao" class="form-label">Nome da Avaliação:</label>
+          <input id="nomeAvaliacao" formControlName="nomeAvaliacao" type="text" class="form-control" />
+          <div *ngIf="avaliacaoForm.get('nomeAvaliacao')?.invalid && avaliacaoForm.get('nomeAvaliacao')?.touched" class="text-danger">
+            Nome da Avaliação é obrigatório e deve ter entre 3 e 64 caracteres.
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <label for="dataNota" class="form-label">Data de Início:</label>
+          <input id="dataNota" formControlName="dataNota" type="date" class="form-control" />
+          <div *ngIf="avaliacaoForm.get('dataNota')?.invalid && avaliacaoForm.get('dataNota')?.touched"
+            class="text-danger">
+            Data de Início é obrigatória e deve ser válida.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dataTermino" class="form-label">Data de Término:</label>
+          <input id="dataTermino" formControlName="dataTermino" type="date" class="form-control" />
+          <div *ngIf="avaliacaoForm.get('dataTermino')?.invalid && avaliacaoForm.get('dataTermino')?.touched"
+            class="text-danger">
+            Data de Término é obrigatória e deve ser válida.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="horario" class="form-label">Horário da Avaliação:</label>
+          <input id="horario" formControlName="horario" type="time" class="form-control" />
+          <div *ngIf="avaliacaoForm.get('horario')?.invalid && avaliacaoForm.get('horario')?.touched"
+            class="text-danger">
+            Horário da Avaliação é obrigatório.
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <label for="valor" class="form-label">Nota Avaliação:</label>
+          <input id="valor" type="text" formControlName="valor" class="form-control" />
+          <div *ngIf="avaliacaoForm.get('valor')?.invalid && avaliacaoForm.get('valor')?.touched" class="text-danger">
+            Nota Avaliação é obrigatória e deve estar entre 0 e 10.
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+          <button type="button" class="btn btn-secondary me-2" (click)="onEdit()" [disabled]="!avaliacaoForm.valid">Editar</button>
+          <button type="button" class="btn btn-danger" (click)="onDelete()" [disabled]="!avaliacaoForm.valid">Deletar</button>
+          <button type="button" (click)="onCancel()" class="btn btn-secondary">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

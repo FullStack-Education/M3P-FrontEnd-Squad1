@@ -1,0 +1,9 @@
+<!-- Assuming you have an 'isLoginPage' boolean variable to determine if it's the login page -->
+<ng-container *ngIf="!isLoginPage">
+  <app-toolbar [pageTitle]="pageTitle"></app-toolbar>
+  <app-sidebar></app-sidebar>
+</ng-container>
+
+<main [ngClass]="{'login-page': isLoginPage, 'content': !isLoginPage}" role="main">
+  <router-outlet></router-outlet>
+</main>
